@@ -3,49 +3,51 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<link rel="shortcut icon" href="../../assets/ico/favicon.png">
+	<link rel="shortcut icon" href="{{ base_url() }}assets/ico/favicon.png">
 
 	<title>{% block title %}{% endblock %} &raquo; {{ site_name }}</title>
 
-	<!-- Bootstrap customized CSS -->
-	<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+	{% block head %}
+	<link rel="stylesheet" href="{{ base_url() }}assets/theme/css/bootstrap.min.css" title="Indigo theme">
+	<link rel="alternate stylesheet" href="{{ base_url() }}assets/theme/css/bootstrap.asparagus.min.css" title="Asparagus theme">
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
-			<script src="../../assets/js/html5shiv.js"></script>
-			<script src="../../assets/js/respond.min.js"></script>
+			<script src="{{ base_url() }}assets/theme/js/html5shiv.js"></script>
+			<script src="{{ base_url() }}assets/theme/js/respond.min.js"></script>
 			<![endif]-->
-</head>
+	{% endblock %}
+
+	</head>
 
 <body>
 
 	<div class="navbar navbar-default navbar-fixed-top">
-		<!-- <div class="container"> -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="{{ base_url }}admin">{{ site_name }}</a>
-			<a class="navbar-brand" href="{{ base_url }}"><small>back to site &raquo;</small></a>
+			<a class="navbar-brand" href="{{ base_url() }}admin">{{ site_name }}</a>
+			<a class="navbar-brand" href="{{ base_url() }}"><small>back to site &raquo;</small></a>
 		</div>
 		<div class="hidden-xs">
 
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
 					<a href="" class="account dropdown-toggle" data-toggle="dropdown">
-						<span class="menu-gravatar" style="background-image:url(https://secure.gravatar.com/avatar/7f3930c2e3af0d6dcb0115e194111898?s=80&amp;d=mm)"></span>
+						<span class="menu-gravatar" style="background-image:url(https://secure.gravatar.com/avatar/{{ current_user.email | md5 }}?s=30&amp;d=mm)"></span>
 						<span class="user-and-welcome-wrapper">
 							<small class="welcome-text">welcome,</small>
-							<span class="username">Barta&nbsp;Tamás</span>
+							<span class="username">{{ current_user.fullname }}</span>
 						</span>
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
+						<li><a href="{{ base_url() }}admin/profile">Profile</a></li>
 						<li class="divider"></li>
-						<li><a href="#">Another action</a></li>
+						<li><a href="{{ base_url() }}admin/logout">Sign out</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -54,60 +56,52 @@
 			<nav class="side-navigation">
 				<div class="side-navigation-wrapper">
 					<div class="visible-xs">
-						
 						<ul class="nav navbar-nav navbar-right">
 							<li class="">
 								<button class="account" data-toggle="collapse" data-target="#account-menu">
-									<span class="menu-gravatar" style="background-image:url(https://secure.gravatar.com/avatar/7f3930c2e3af0d6dcb0115e194111898?s=30&amp;d=mm)"></span>
+									<span class="menu-gravatar" style="background-image:url(https://secure.gravatar.com/avatar/{{ current_user.email | md5 }}?s=30&amp;d=mm)"></span>
 									<span class="user-and-welcome-wrapper">
-										<small class="welcome-text">üdv,</small>
-										<span class="username">Barta&nbsp;Tamás</span>
+										<small class="welcome-text">welcome,</small>
+										<span class="username">{{ current_user.fullname }}</span>
 									</span>
 									<b class="caret"></b>
 								</button>
 								<ul class="collapse" id="account-menu">
-									<li><a href="#">Action</a></li>
-									<li><a href="#">Another action</a></li>
+									<li><a href="{{ base_url() }}admin/profile">Profile</a></li>
+									<li><a href="{{ base_url() }}admin/logout">Sign out</a></li>
 								</ul>
 							</li>
 						</ul>
 					</div><!-- /.visible-xs -->
 					<ul class="primary">
-						<li><a href=""><span class="label label-primary pull-right">3</span>
-							<span class="glyphicon glyphicon-cloud"></span> Lorem ipsum.
+						<li><a href="{{ base_url() }}admin"><span class="label label-primary pull-right">3</span>
+							<span class="glyphicon glyphicon-home"></span> Dashboard
 						</a></li>
-						<li><a href="/login"><span class="label pull-right"></span>
-							<span class="glyphicon glyphicon-lock"></span> Login page
-						</a></li>
-						<li><a href="" id="menu-item-home" onclick="IndigoAdmin.displayNotification('Jeay', 'Műxik', ''); return false;"> <span class="label pull-right"></span>
-							<span class="glyphicon glyphicon-road"></span> Fugiat, maiores?
-						</a></li>
-						<li>
-							<button data-toggle="collapse" data-target="#menu-item-1">
-								<span class="glyphicon glyphicon-cog"></span>
-								Repellat, illum.
-								<b class="caret"></b>
-							</button>
-							<ul class="collapse" id="menu-item-1">
-								<li><a href=""><span class="label label-danger pull-right">BAJ</span> Lorem ipsum.</a></li>
-								<li><a href="">Voluptate, nemo.</a></li>
-								<li><a href="">Fugiat, maiores?</a></li>
-								<li><a href="">Repellat, illum.</a></li>
-							</ul>
-						</li>
+						<!-- <li><a href="{{ base_url() }}admin/auth"><span class="glyphicon glyphicon-user"></span> Users</a></li> -->
 						<li>
 							<button data-toggle="collapse" data-target="#menu-item-2">
-								<span class="glyphicon glyphicon-book"></span>
-								Repellat, illum.
+								<span class="glyphicon glyphicon-user"></span>
+								Authentication
 								<b class="caret"></b>
 							</button>
 							<ul class="collapse" id="menu-item-2">
-								<li><a href=""><span class="label label-primary pull-right">7</span> Lorem ipsum.</a></li>
-								<li><a href="">Voluptate, nemo.</a></li>
-								<li><a href="">Fugiat, maiores?</a></li>
-								<li><a href="">Repellat, illum.</a></li>
+								<li><a href="{{ base_url() }}admin/auth">Users</a></li>
+								<li><a href="{{ base_url() }}admin/auth/permissions">Permissions</a></li>
 							</ul>
 						</li>
+						{#
+						<li>
+							<button data-toggle="collapse" data-target="#menu-item-2">
+								<span class="glyphicon glyphicon-book"></span>
+								Submenu
+								<b class="caret"></b>
+							</button>
+							<ul class="collapse" id="menu-item-2">
+								<li><a href="">Menu item 1</a></li>
+								<li><a href="">Menu item 2</a></li>
+							</ul>
+						</li>
+						#}
 					</ul>
 				</div> <!-- /.side-navigation-wrapper -->
 				<div class="side-navigation-footer">
@@ -121,389 +115,29 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
 	<div class="content-wrap">
-		<div class="alert alert-success alert-dismissable">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			<strong>Warning!</strong> Best check yo self, you're not looking too good.
-		</div>
-
-		<h2>Dashboard <small>Overview of your site</small></h2>
-		<p class="lead">You can see the most important informations from all of your installed modules here.</p>
-
-		<div class="row">
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<!-- Default panel contents -->
-					<div class="panel-heading">Panel heading</div>
-					<div class="panel-body">
-						<p>...</p>
-						<div class="make-switch" data-on-label="<span class='glyphicon glyphicon-ok'></span>" data-off-label="<span class='glyphicon glyphicon-remove'></span>">
-							<input type="checkbox">
-						</div>
-						<div class="make-switch" data-on-label="I" data-off-label="O">
-							<input type="checkbox">
-						</div>
-						<button class="btn btn-default">kaka</button>
-					</div>
-
-					<!-- List group -->
-					<ul class="list-group">
-						<li class="list-group-item">Cras justo odio</li>
-						<li class="list-group-item">Dapibus ac facilisis in</li>
-						<li class="list-group-item">Morbi leo risus</li>
-						<li class="list-group-item">Porta ac consectetur ac</li>
-						<li class="list-group-item">Vestibulum at eros</li>
-					</ul>
-				</div>
-			</div><!-- /.col-md-6 -->
-			<div class="col-md-6">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<div class="panel-title">Lorem ipsum dolor.</div>
-					</div>
-					<div class="panel-body">
-						<form class="form-horizontal" role="form">
-							<div class="form-group">
-								<label for="inputEmail1" class="col-lg-2 control-label">Email</label>
-								<div class="col-lg-10">
-									<input type="email" class="form-control" id="inputEmail1" placeholder="Email">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputPassword1" class="col-lg-2 control-label">Password</label>
-								<div class="col-lg-10">
-									<input type="password" class="form-control" id="inputPassword1" placeholder="Password">
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-lg-offset-2 col-lg-10">
-									<div class="checkbox">
-										<span class="make-switch"><input id="remember-me" type="checkbox"></span>
-										<label for="remember-me">
-											Remember me
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-lg-offset-2 col-lg-10">
-									<button type="submit" class="btn btn-default">Sign in</button>
-								</div>
-							</div>
-						</form>
-						<h3>Gombok</h3>
-						<p>
-							<button class="btn btn-primary">Lorem.</button>
-							<button class="btn btn-success">Veniam.</button>
-							<button class="btn btn-warning">Accusamus!</button>
-							<button class="btn btn-danger">Numquam.</button>
-							<button class="btn btn-info">Atque.</button>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div><!-- /.row -->
-
-		<h2>Users <small>Manage the users registered on this site</small></h2>
-		<p class="lead">Nem kell ide talán.</p>
-
-		<div class="row">
-			<div class="col-lg-6">
-				<div class="panel panel-info">
-					<div class="panel-heading">
-						<div class="panel-title">
-							<span class="glyphicon glyphicon-user"></span>
-							Users
-						</div>
-					</div>
-					<div class="table-responsive">
-						<table class="table table-striped">
-							<tr>
-								<th>#</th>
-								<th>Ullam, tempora.</th>
-								<th>Quae, earum!</th>
-								<th>Beatae, quis.</th>
-							</tr>
-							<tr>
-								<td>1.</td>
-								<td>Repellat, sunt blanditiis.</td>
-								<td>Iure, numquam, aspernatur.</td>
-								<td>Rerum, harum, voluptates!</td>
-							</tr>
-							<tr>
-								<td>2.</td>
-								<td>Saepe, doloremque, eveniet.</td>
-								<td>Vero, eligendi, repudiandae.</td>
-								<td>Beatae, blanditiis, cupiditate!</td>
-							</tr>
-							<tr>
-								<td>3.</td>
-								<td>Aut, nihil, suscipit!</td>
-								<td>Facilis, rem officiis?</td>
-								<td>Amet, ipsum, saepe.</td>
-							</tr>
-							<tr>
-								<td>4.</td>
-								<td>Earum, nostrum, quo.</td>
-								<td>Veritatis, impedit laudantium?</td>
-								<td>Eius, debitis, consequuntur.</td>
-							</tr>
-							<tr>
-								<td>5.</td>
-								<td>Nisi, praesentium, sequi?</td>
-								<td>In, nihil, itaque!</td>
-								<td>Dolor, odit, facilis.</td>
-							</tr>
-							<tr>
-								<td>6.</td>
-								<td>Natus, nam delectus.</td>
-								<td>Saepe, quasi, at.</td>
-								<td>Nesciunt, necessitatibus magni?</td>
-							</tr>
-						</table>
-					</div>
-				
-					<ul class="pagination">
-						<li><a href="#">&laquo;</a></li>
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">&raquo;</a></li>
-					</ul>
-				
-				</div><!-- /.panel -->
-			</div><!-- /.col-lg-6 -->
-			<div class="col-lg-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<div class="panel-title">
-							<span class="glyphicon glyphicon-list"></span>
-							DataTables with Bootstrap 3
-						</div>
-					</div>
-					<table class="datatables table table-striped table-hover">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Necessitatibus, porro, atque?</th>
-								<th>Voluptatem, dicta, debitis!</th>
-								<th>Fuga, cum, commodi.</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1.</td>
-								<td>Nesciunt, nihil, officia.</td>
-								<td>Fugiat, quibusdam veniam!</td>
-								<td>Mollitia, quia, earum.</td>
-							</tr>
-							<tr>
-								<td>2.</td>
-								<td>Est, molestiae, veritatis.</td>
-								<td>Culpa, placeat delectus.</td>
-								<td>Numquam, dolorem quam.</td>
-							</tr>
-							<tr>
-								<td>3.</td>
-								<td>Eos, nulla iusto.</td>
-								<td>A, omnis, asperiores.</td>
-								<td>Consequuntur, qui, dolores!</td>
-							</tr>
-							<tr>
-								<td>4.</td>
-								<td>Porro, labore, dicta!</td>
-								<td>Suscipit, non, perspiciatis.</td>
-								<td>Similique, quo ipsum.</td>
-							</tr>
-							<tr>
-								<td>5.</td>
-								<td>Illo, dolorem, sit!</td>
-								<td>Facere, molestiae, expedita!</td>
-								<td>Labore, laboriosam, nesciunt?</td>
-							</tr>
-							<tr>
-								<td>6.</td>
-								<td>Incidunt, doloremque, earum.</td>
-								<td>Excepturi, voluptatum, odio.</td>
-								<td>Aspernatur, ratione, modi.</td>
-							</tr>
-							<tr>
-								<td>7.</td>
-								<td>Nobis, numquam, laborum.</td>
-								<td>Animi, sint, in.</td>
-								<td>Quae, quam molestias.</td>
-							</tr>
-							<tr>
-								<td>8.</td>
-								<td>Ea, consequatur, repellat.</td>
-								<td>Quam, vitae, molestiae.</td>
-								<td>Sed, molestias maiores?</td>
-							</tr>
-							<tr>
-								<td>9.</td>
-								<td>Reprehenderit, pariatur, necessitatibus.</td>
-								<td>Fuga, consectetur, dolor.</td>
-								<td>Nulla, facere sapiente!</td>
-							</tr>
-							<tr>
-								<td>10.</td>
-								<td>Adipisci, ipsa rerum!</td>
-								<td>Amet, voluptas, quod.</td>
-								<td>Obcaecati, similique, id!</td>
-							</tr>
-							<tr>
-								<td>11.</td>
-								<td>Reprehenderit, excepturi, necessitatibus!</td>
-								<td>Quasi, impedit iste!</td>
-								<td>Cupiditate, nostrum, neque!</td>
-							</tr>
-							<tr>
-								<td>12.</td>
-								<td>Molestiae, quia, obcaecati!</td>
-								<td>Atque, ratione, non.</td>
-								<td>Consequuntur, repellat, laudantium.</td>
-							</tr>
-							<tr>
-								<td>13.</td>
-								<td>Odit, excepturi, est.</td>
-								<td>Esse, aliquid eligendi.</td>
-								<td>Quisquam, non, alias.</td>
-							</tr>
-							<tr>
-								<td>14.</td>
-								<td>Odit, laboriosam nisi.</td>
-								<td>Quidem, possimus earum!</td>
-								<td>Dolore, quod, earum.</td>
-							</tr>
-							<tr>
-								<td>15.</td>
-								<td>Dolore, sint, distinctio.</td>
-								<td>Dicta, sunt, dolor!</td>
-								<td>Fuga, cum, culpa.</td>
-							</tr>
-							<tr>
-								<td>16.</td>
-								<td>Numquam, id, eius?</td>
-								<td>Pariatur, nulla excepturi.</td>
-								<td>Blanditiis, iure, quasi!</td>
-							</tr>
-							<tr>
-								<td>17.</td>
-								<td>Eveniet, quam, impedit.</td>
-								<td>Cum, voluptates, odio.</td>
-								<td>Sequi, ea, recusandae.</td>
-							</tr>
-							<tr>
-								<td>18.</td>
-								<td>Error, magnam, ipsum.</td>
-								<td>Commodi, quod, reprehenderit!</td>
-								<td>Facilis, doloribus, dolor!</td>
-							</tr>
-							<tr>
-								<td>19.</td>
-								<td>Laboriosam, nisi, sequi.</td>
-								<td>Quisquam, sit, nostrum.</td>
-								<td>Tempora, facere, aliquid.</td>
-							</tr>
-							<tr>
-								<td>20.</td>
-								<td>Dolorem, mollitia, excepturi.</td>
-								<td>Ratione, quibusdam eveniet.</td>
-								<td>Deserunt, aspernatur, commodi!</td>
-							</tr>
-							<tr>
-								<td>21.</td>
-								<td>Nulla, blanditiis, atque.</td>
-								<td>Nostrum, hic, vel.</td>
-								<td>Distinctio, ipsum, quis!</td>
-							</tr>
-							<tr>
-								<td>22.</td>
-								<td>Repudiandae, sint, explicabo?</td>
-								<td>Voluptatem, dignissimos, ullam.</td>
-								<td>Rerum, eaque, non.</td>
-							</tr>
-							<tr>
-								<td>23.</td>
-								<td>Sed, architecto, alias.</td>
-								<td>Ab, minima, sapiente!</td>
-								<td>Repellat, laudantium, cumque.</td>
-							</tr>
-							<tr>
-								<td>24.</td>
-								<td>Maxime, optio, deserunt!</td>
-								<td>Autem, natus, dolor.</td>
-								<td>Omnis, impedit, minus?</td>
-							</tr>
-							<tr>
-								<td>25.</td>
-								<td>Neque, nesciunt, quia.</td>
-								<td>Rerum, deserunt, voluptas.</td>
-								<td>Deleniti, possimus molestiae!</td>
-							</tr>
-							<tr>
-								<td>26.</td>
-								<td>Repellat, in, voluptates.</td>
-								<td>Repellat, ipsa rem.</td>
-								<td>Impedit, voluptatum, qui?</td>
-							</tr>
-							<tr>
-								<td>27.</td>
-								<td>Recusandae, doloremque, alias.</td>
-								<td>Magnam, ad, exercitationem.</td>
-								<td>Ex, impedit, nihil!</td>
-							</tr>
-							<tr>
-								<td>28.</td>
-								<td>Aliquid, sapiente, nihil.</td>
-								<td>Nihil, beatae, error!</td>
-								<td>Unde, ad, accusamus.</td>
-							</tr>
-							<tr>
-								<td>29.</td>
-								<td>Ducimus, earum, molestiae.</td>
-								<td>Sunt, id, eos.</td>
-								<td>Nihil, debitis, nesciunt!</td>
-							</tr>
-							<tr>
-								<td>30.</td>
-								<td>Ducimus, earum, molestiae.</td>
-								<td>Sunt, id, eos.</td>
-								<td>Nihil, debitis, nesciunt!</td>
-							</tr>
-						</tbody>
-					</table>
-				</div><!-- /.panel -->
-			</div><!-- /.col-lg-6 -->
-		</div><!-- /.row -->
-
+	{% block content %}{% endblock %}
 	</div><!-- /.content-wrap -->
 
-	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-	<script src="bootstrap/js/bootstrap-switch.min.js"></script>
-	<script src="js/bootstrap-select.min.js"></script>
-	<script src="js/jquery.dataTables.min.js"></script>
-	<script src="js/datatables.js"></script>
-	<script src="application.js"></script>
+
+
+	{% block javascript %}
+	<script src="{{ base_url() }}assets/theme/js/jquery-1.9.1.min.js"></script>
+	<script src="{{ base_url() }}assets/theme/js/bootstrap.min.js"></script>
+	<script src="{{ base_url() }}assets/theme/js/bootstrap-switch.min.js"></script>
+	<script src="{{ base_url() }}assets/theme/js/bootstrap-select.min.js"></script>
+	<script src="{{ base_url() }}assets/theme/js/jquery.dataTables.min.js"></script>
+	<script src="{{ base_url() }}assets/theme/js/datatables.js"></script>
+	<script src="{{ base_url() }}assets/theme/js/application.js"></script>
+	{% endblock %}
 	<script type="text/javascript">
 		$(document).ready(function() {
 			IndigoAdmin.pageInit();
-			IndigoAdmin.addFastButton('Mentés', 'save', function() {
-				alert('A mentésre kattintottál');
-			});
+			// IndigoAdmin.addFastButton('Save', 'save', function() {
+			// 	var url = $('.menu-gravatar').css('background-image').replace(/url\("(.*)"\)/g, '$1');
+			// 	IndigoAdmin.displayNotification('Title', 'Body of the notification.', url);
+			// });
+			{% block documentready %}{% endblock %}
 		});
 	</script>
 </body>
