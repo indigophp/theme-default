@@ -116,6 +116,12 @@
 
 
 	<div class="content-wrap">
+	{% if not session_get_flash('error') is null %}
+		<div class="alert alert-dismissable alert-danger">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			{{ session_get_flash('error') }}
+		</div>
+	{% endif %}
 	{% block content %}{% endblock %}
 	</div><!-- /.content-wrap -->
 
