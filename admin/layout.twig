@@ -9,7 +9,7 @@
 
 	{% block head %}
 	<link rel="stylesheet" href="{{ base_url() }}assets/theme/css/bootstrap.min.css" title="Indigo theme">
-	<link rel="alternate stylesheet" href="{{ base_url() }}assets/theme/css/bootstrap.asparagus.min.css" title="Asparagus theme">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -30,7 +30,7 @@
 				<span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="{{ base_url() }}admin">{{ site_name }}</a>
-			<a class="navbar-brand" href="{{ base_url() }}"><small>back to site &raquo;</small></a>
+			<a class="navbar-brand" href="{{ base_url() }}"><small>{% trans 'back to site &raquo;' %}</small></a>
 		</div>
 		<div class="hidden-xs">
 
@@ -39,15 +39,15 @@
 					<a href="" class="account dropdown-toggle" data-toggle="dropdown">
 						<span class="menu-gravatar" style="background-image:url(https://secure.gravatar.com/avatar/{{ current_user.email | md5 }}?s=30&amp;d=mm)"></span>
 						<span class="user-and-welcome-wrapper">
-							<small class="welcome-text">welcome,</small>
+							<small class="welcome-text">{% trans 'welcome,' %}</small>
 							<span class="username">{{ current_user.fullname }}</span>
 						</span>
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="{{ base_url() }}admin/profile">Profile</a></li>
+						<li><a href="{{ base_url() }}admin/profile">{% trans 'Profile' %}</a></li>
 						<li class="divider"></li>
-						<li><a href="{{ base_url() }}admin/logout">Sign out</a></li>
+						<li><a href="{{ base_url() }}admin/logout">{% trans 'Sign out' %}</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -61,32 +61,41 @@
 								<button class="account" data-toggle="collapse" data-target="#account-menu">
 									<span class="menu-gravatar" style="background-image:url(https://secure.gravatar.com/avatar/{{ current_user.email | md5 }}?s=30&amp;d=mm)"></span>
 									<span class="user-and-welcome-wrapper">
-										<small class="welcome-text">welcome,</small>
+										<small class="welcome-text">{% trans 'welcome,' %}</small>
 										<span class="username">{{ current_user.fullname }}</span>
 									</span>
 									<b class="caret"></b>
 								</button>
 								<ul class="collapse" id="account-menu">
-									<li><a href="{{ base_url() }}admin/profile">Profile</a></li>
-									<li><a href="{{ base_url() }}admin/logout">Sign out</a></li>
+									<li><a href="{{ base_url() }}admin/profile">{% trans 'Profile' %}</a></li>
+									<li><a href="{{ base_url() }}admin/logout">{% trans 'Sign out' %}</a></li>
 								</ul>
 							</li>
 						</ul>
 					</div><!-- /.visible-xs -->
 					<ul class="primary">
 						<li><a href="{{ base_url() }}admin"><span class="label label-primary pull-right">3</span>
-							<span class="glyphicon glyphicon-home"></span> Dashboard
+							<span class="glyphicon glyphicon-dashboard"></span> {% trans 'Dashboard' %}
 						</a></li>
 						<!-- <li><a href="{{ base_url() }}admin/auth"><span class="glyphicon glyphicon-user"></span> Users</a></li> -->
 						<li>
 							<button data-toggle="collapse" data-target="#menu-item-2">
 								<span class="glyphicon glyphicon-user"></span>
-								Authentication
+								{% trans 'Authentication' %}
 								<b class="caret"></b>
 							</button>
 							<ul class="collapse" id="menu-item-2">
-								<li><a href="{{ base_url() }}admin/auth">Users</a></li>
-								<li><a href="{{ base_url() }}admin/auth/permissions">Permissions</a></li>
+								<li><a href="{{ base_url() }}admin/auth">{% trans 'Users' %}</a></li>
+								<li><a href="{{ base_url() }}admin/auth/permissions">{% trans 'Permissions' %}</a></li>
+							</ul>
+						</li><li>
+							<button data-toggle="collapse" data-target="#menu-item-3">
+								<span class="fa fa-cogs"></span>
+								{% trans 'Settings' %}
+								<b class="caret"></b>
+							</button>
+							<ul class="collapse" id="menu-item-3">
+								<li><a href="{{ base_url() }}admin/auth/permissions">{% trans 'Themes' %}</a></li>
 							</ul>
 						</li>
 						{#
@@ -129,6 +138,18 @@
 		</div>
 	{% endif %}
 	{% block content %}{% endblock %}
+
+		<footer class="content-wrap-footer">
+			<hr>
+			{% set indigo_admin = 'Indigo Admin' %}
+			{% set indigo_home = 'https://github.com/indigo-soft' %}
+			{% set indigo = 'Indigo' %}
+			{% set year = '2013' %}
+			{% trans %}
+				© {{ year }} {{ indigo_admin }} by <a href="{{ indigo_home }}">{{ indigo }}</a>
+			{% endtrans %}
+		</footer>
+
 	</div><!-- /.content-wrap -->
 
 
@@ -140,11 +161,11 @@
 	<script src="{{ base_url() }}assets/theme/js/bootstrap-select.min.js"></script>
 	<script src="{{ base_url() }}assets/theme/js/jquery.dataTables.min.js"></script>
 	<script src="{{ base_url() }}assets/theme/js/datatables.js"></script>
-	<script src="{{ base_url() }}assets/theme/js/application.js"></script>
+	<script src="{{ base_url() }}assets/theme/js/admin.js"></script>
 	{% endblock %}
 	<script type="text/javascript">
 		$(document).ready(function() {
-			IndigoAdmin.pageInit();
+			IndigoAdmin.pageInit('{{ base_url() }}');
 			// IndigoAdmin.addFastButton('Save', 'save', function() {
 			// 	var url = $('.menu-gravatar').css('background-image').replace(/url\("(.*)"\)/g, '$1');
 			// 	IndigoAdmin.displayNotification('Title', 'Body of the notification.', url);

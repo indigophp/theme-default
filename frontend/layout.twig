@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="shortcut icon" href="{{ base_url() }}assets/ico/favicon.png">
+
+	<title>{% block title %}{% endblock %} &raquo; {{ site_name }}</title>
+
+	{% block head %}
+	<link rel="stylesheet" href="{{ base_url() }}assets/theme/css/bootstrap.min.css" title="Indigo theme">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+			<script src="{{ base_url() }}assets/theme/js/html5shiv.js"></script>
+			<script src="{{ base_url() }}assets/theme/js/respond.min.js"></script>
+			<![endif]-->
+	{% endblock %}
+
+	</head>
+
+<body>
+
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				{# <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button> #}
+				<a class="navbar-brand" href="{{ base_url() }}">{{ site_name }}</a>
+			</div>
+		</div>
+		
+		<!-- </div> -->
+	</div>
+
+
+
+
+	{% if not session_get_flash('error') is null %}
+		<div class="alert alert-dismissable alert-danger">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			{{ session_get_flash('error') }}
+		</div>
+	{% endif %}
+	{% if not session_get_flash('success') is null %}
+		<div class="alert alert-dismissable alert-success">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			{{ session_get_flash('success') }}
+		</div>
+	{% endif %}
+	{% block content %}{% endblock %}
+
+	<div class="container">
+		<hr>
+		<footer>
+			{% set link = '<a href="">Indigo Base</a>' %}
+			{% set version = '0.1-dev' %}
+			<div class="pull-left">{% trans %}{{ link }} is released under the MIT license.{% endtrans %} <br><small>{% trans %}Version: {{ version }}{% endtrans %}</small></div>
+			<div class="pull-right">Page rendered in {exec_time}s using {mem_usage}mb of memory.</div>
+		</footer>
+	</div>
+
+
+	{% block javascript %}
+	<script src="{{ base_url() }}assets/theme/js/jquery-1.9.1.min.js"></script>
+	<script src="{{ base_url() }}assets/theme/js/bootstrap.min.js"></script>
+	{# <script src="{{ base_url() }}assets/theme/js/bootstrap-switch.min.js"></script>
+	<script src="{{ base_url() }}assets/theme/js/bootstrap-select.min.js"></script> #}
+	{% endblock %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			{% block documentready %}{% endblock %}
+		});
+	</script>
+</body>
+</html>

@@ -8,26 +8,48 @@ var IndigoAdmin = (function() {
 		var Unity = external.getUnityObject(1.0);
 	} catch(e) {}
 
-	function pageInit () {
+	function pageInit (base_url) {
+
+		console.log('Incorrectly inline styled elements: ', $('[style]:not(.menu-gravatar)'));
+
 		$('.datatables').each(function() {
 			$(this).dataTable({
+				"oLanguage": {
+					"sUrl": base_url + "translation/datatables.json"
+				},
 				"sPaginationType": "bs_full",
 				"sDom": "<'panel-heading'<'pull-right'f><'pull-left'l><'pull-left'>r<'clearfix'>><'table-responsive't>p",
 				"bProcessing": $(this).data('source') ? true : false,
 				"bServerSide": $(this).data('source') ? true : false,
-				"sAjaxSource": $(this).data('source')
+				"sAjaxSource": $(this).data('source'),
+				"fnInitComplete": function(oSettings, json) {
+					var datatable = this;
+					// SEARCH - Add the placeholder for Search and Turn this into in-line form control
+					var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
+					search_input.attr('placeholder', (oSettings && oSettings.oLanguage && oSettings.oLanguage.sSearchPlaceholder) ? oSettings.oLanguage.sSearchPlaceholder : 'Search all fields');
+					search_input.addClass('form-control input-sm');
+					// LENGTH - Inline-Form control
+					var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
+					// length_sel.addClass('form-control input-sm');
+					length_sel.selectpicker().selectpicker('setStyle', 'btn-sm', 'add');
+				},
+				"fnServerData": function(sSource, aoData, fnCallback) {
+					$.ajax( {
+						"dataType": 'json',
+						"type": "POST",
+						"url": sSource,
+						"data": aoData,
+						"success": function(response, result, xhr) {
+							console.log(result);
+							fnCallback(response, result, xhr);
+						},
+						"timeout": 15000,
+						"error": function(param) {
+							console.log(param);
+						}
+					} );
+				},
 			});
-		});
-		$('.datatables').each(function(){
-			var datatable = $(this);
-			// SEARCH - Add the placeholder for Search and Turn this into in-line form control
-			var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
-			search_input.attr('placeholder', 'Search all fields');
-			search_input.addClass('form-control input-sm');
-			// LENGTH - Inline-Form control
-			var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
-			// length_sel.addClass('form-control input-sm');
-			length_sel.selectpicker().selectpicker('setStyle', 'btn-sm', 'add');
 		});
 
 		try {

@@ -1,18 +1,45 @@
-{% extends 'layout.twig' %}
+{% extends 'admin/layout.twig' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}{% trans 'Dashboard' %}{% endblock %}
 
 {% block documentready %}
 	$(IndigoAdmin).on('unityready', function() {
-		IndigoAdmin.displayNofitication('{{ current_user.username }}', 'Logged in successfully.', 'https://secure.gravatar.com/avatar/{{ current_user.email | md5 }}?s=50');
+		IndigoAdmin.displayNofitication('{{ current_user.username }}', '{% trans 'Logged in successfully.' %}', 'https://secure.gravatar.com/avatar/{{ current_user.email | md5 }}?s=50');
 	});
 {% endblock %}
 
 {% block content %}
 
-		<h2>Dashboard <small>Overview of your site</small></h2>
-		<p class="lead">You can see the most important informations from all of your installed modules here.</p>
-{#		<div class="alert alert-success alert-dismissable">
+		<h2>{% trans 'Dashboard' %} <small>{% trans 'Overview of your site' %}</small></h2>
+		<p class="lead">{% trans 'You can see the most important informations from all of your installed modules here.' %}</p>
+
+		<div class="row">
+			{% for widget in widgets %}
+				<div class="col-sm-6">
+					{{ widget }}
+				</div>
+			{% else %}
+				<p class="col-sm-12 text-muted">{% trans 'You have no modules installed which have widgets.' %}</p>
+			{% endfor %}
+		</div>
+
+{#
+
+		<div class="alert alert-success">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam, accusantium perspiciatis neque molestias illo doloremque reiciendis nam aperiam vel recusandae eum tempore reprehenderit fuga! Cumque tempore vero quis aliquid ad!</div>
+		<div class="alert alert-warning">Eos, consequuntur, animi perferendis eveniet sint quaerat in. Quia, dolor, architecto, nobis quae impedit ipsam doloribus enim minus quo consequatur blanditiis voluptas obcaecati magnam vel dolore autem tempore ut maxime.</div>
+		<div class="alert alert-danger">Magni, doloribus, quod, ducimus alias illum quasi distinctio beatae sed cupiditate inventore quaerat facere! Vero, odit, nesciunt incidunt ipsum assumenda veritatis illo sit quisquam! Quis, suscipit sequi eligendi dicta amet!</div>
+		<div class="alert alert-info">Iusto, incidunt, vero, explicabo quisquam temporibus cum magni repellat in libero eaque corporis possimus officiis animi quo doloribus autem quas sequi veritatis necessitatibus quasi aut enim pariatur aperiam similique quidem?</div>
+
+		<div>
+			<button class="btn btn-default">Lorem ipsum dolor.</button>
+			<button class="btn btn-primary">Consequatur, velit assumenda!</button>
+			<button class="btn btn-success">Provident, nobis, ipsam.</button>
+			<button class="btn btn-warning">Minima, quidem, animi!</button>
+			<button class="btn btn-info">Animi, ipsum, esse.</button>
+			<button class="btn btn-danger">Enim, fugiat, aperiam.</button>
+		</div>
+
+		<div class="alert alert-success alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong>Warning!</strong> Best check yo self, you're not looking too good.
 		</div>

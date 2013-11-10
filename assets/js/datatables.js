@@ -2,10 +2,10 @@
 $.extend( true, $.fn.dataTable.defaults, {
 	"sDom": "<'panel-heading'<'pull-right'f><'pull-left'l><'pull-left'i>r<'clearfix'>><'table-responsive't>p",
     "sPaginationType": "bs_normal",
-    "oLanguage": {
-        "sLengthMenu": "Show _MENU_ Rows",
-        "sSearch": ""
-    }
+    // "oLanguage": {
+    //     "sLengthMenu": "Show _MENU_ Rows",
+    //     "sSearch": ""
+    // }
 } );
 
 /* Default class modification */

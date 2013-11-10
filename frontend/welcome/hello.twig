@@ -1,0 +1,9 @@
+{% extends 'frontend/layout.twig' %}
+
+{% block content %}
+	{% set name = input_get('name') %}
+	{% set name = name is null ? 'World' : name %}
+	<div class="container">
+		<h1>{% trans %}Hello, {{ name }}{% endtrans %}!</h1>
+	</div>
+{% endblock %}
