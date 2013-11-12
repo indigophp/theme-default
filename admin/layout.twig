@@ -74,6 +74,49 @@
 						</ul>
 					</div><!-- /.visible-xs -->
 					<ul class="primary">
+						{% for item in menu_render('admin') %}
+							<li>
+								{% if item.children %}
+									<ul>{{ macros.menu(item.children) }}</ul>
+								{% else %}
+									<a href="{{ base_url() ~ item.url}}">
+										{% if item.badge is not empty %}
+											<span class="label label-primary pull-right">{{ item.badge }}</span>
+										{% endif %}
+										<span class="glyphicon glyphicon-{{ item.icon | default('nope') }}"></span>
+										{% set name = item.name %}
+										{% trans name %}
+									</a>
+								{% endif %}
+							</li>
+						{% else %}
+							<button data-toggle="collapse" data-target="#menu-item-2">
+								<span class="glyphicon glyphicon-{{ item.icon }}"></span>
+								{% trans 'Authentication' %}
+								<b class="caret"></b>
+							</button>
+						{% endfor %}
+
+						{% macro menu(items)%}
+							{% for item in items %}
+								<li>
+									<a href="{{ base_url() ~ item.url}}">
+										{% if item.badge is not empty %}
+											<span class="label label-primary pull-right">{{ item.badge }}</span>
+										{% endif %}
+										<span class="glyphicon glyphicon-{{ item.icon | default('nope') }}"></span>
+										{% set name = item.name %}
+										{% trans name %}
+									</a>
+									{% if item.children %}
+										<ul>{{ _self.menu(item.children) }}</ul>
+									{% endif %}
+								</li>
+							{% endfor %}
+						{% endmacro %}
+
+
+
 						<li><a href="{{ base_url() }}admin"><span class="label label-primary pull-right">3</span>
 							<span class="glyphicon glyphicon-dashboard"></span> {% trans 'Dashboard' %}
 						</a></li>
