@@ -1,0 +1,33 @@
+<ul class="{{ class }}" {% if id %}id="menu-{{ id }}"{% endif %}>
+	{% for item in items %}
+		<li>
+			{% if item.children %}
+				{% if id %}
+					{% set index = id ~ '-' ~ loop.index %}
+				{% else %}
+					{% set index = loop.index %}
+				{% endif %}
+
+				<button data-toggle="collapse" data-target="#menu-{{ index }}">
+					{% if class == 'primary' %}
+						<span class="{{ item.icon | default('glyphicon glyphicon-chevron-right') }}"></span>
+					{% endif %}
+					<span class="label label-primary pull-right">{{ item.badge }}</span>
+					{% set name = item.name %}
+					{% trans name %}
+					<b class="caret"></b>
+				</button>
+				{% include 'admin/menu.twig' with {'items': item.children, 'class': 'collapse', 'id': index} %}
+			{% else %}
+				<a href="{{ base_url() ~ item.url}}">
+					{% if class == 'primary' %}
+						<span class="{{ item.icon | default('glyphicon glyphicon-chevron-right') }}"></span>
+					{% endif %}
+					<span class="label label-primary pull-right">{{ item.badge }}</span>
+					{% set name = item.name %}
+					{% trans name %}
+				</a>
+			{% endif %}
+		</li>
+	{% endfor %}
+</ul>
