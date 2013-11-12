@@ -7189,6 +7189,10 @@ div.dataTables_info {
   text-align: center;
 }
 
+.theme-container img {
+  margin-right: 10px;
+}
+
 @media print {
   .side-navigation {
     display: none;
