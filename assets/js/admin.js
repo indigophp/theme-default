@@ -13,7 +13,7 @@ var IndigoAdmin = (function() {
 		console.log('Incorrectly inline styled elements: ', $('[style]:not(.menu-gravatar)'));
 
 		$('.datatables').each(function() {
-			$(this).dataTable({
+			var dtInstance = $(this).dataTable({
 				"oLanguage": {
 					"sUrl": base_url + "translation/datatables.json"
 				},
@@ -49,6 +49,35 @@ var IndigoAdmin = (function() {
 						}
 					} );
 				},
+			});
+
+			$(this).find('.filter').each(function() {
+				var inputs = $(this).find('input, select');
+				inputs.change(function() {
+					if ($(this).is('select'))
+					{
+						dtInstance.fnFilter($(this).find('option:selected').val(), inputs.index(this));
+					}
+					else
+					{
+						dtInstance.fnFilter(this.value, inputs.index(this));
+					}
+				});
+
+				$(this).find('[type=reset]').click(function(event) {
+					inputs.each(function(index, el) {
+						if ($(this).is('select'))
+						{
+							$(this).val([]);
+						}
+						else
+						{
+							$(this).val('');
+						}
+					});
+
+					dtInstance.fnFilterClear();
+				});
 			});
 		});
 
