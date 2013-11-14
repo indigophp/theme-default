@@ -34,6 +34,10 @@ var IndigoAdmin = (function() {
 					length_sel.selectpicker().selectpicker('setStyle', 'btn-sm', 'add');
 				},
 				"fnServerData": function(sSource, aoData, fnCallback) {
+					$.each($(this).data(), function(index, val) {
+						aoData.push({'name': index, 'value': val});
+					});
+
 					$.ajax( {
 						"dataType": 'json',
 						"type": "POST",
@@ -51,33 +55,53 @@ var IndigoAdmin = (function() {
 				},
 			});
 
-			$(this).find('.filter').each(function() {
+			// All select filters should be selectpickers
+			dtInstance.find('.filter select').selectpicker();
+
+			// Filter mechanism on filter control change
+			dtInstance.find('.filter').each(function() {
 				var inputs = $(this).find('input, select');
 				inputs.change(function() {
 					if ($(this).is('select'))
 					{
-						dtInstance.fnFilter($(this).find('option:selected').val(), inputs.index(this));
+						dtInstance.fnFilter($(this).val(), inputs.index(this));
 					}
 					else
 					{
 						dtInstance.fnFilter(this.value, inputs.index(this));
 					}
 				});
+			});
 
-				$(this).find('[type=reset]').click(function(event) {
-					inputs.each(function(index, el) {
-						if ($(this).is('select'))
-						{
-							$(this).val([]);
-						}
-						else
-						{
-							$(this).val('');
-						}
-					});
-
-					dtInstance.fnFilterClear();
+			// Filter reset mechanism
+			dtInstance.find('.filter [type=reset]').click(function() {
+				dtInstance.find('.filter select').each(function() {
+					$(this).val([]).selectpicker('render');
 				});
+
+				dtInstance.find('.filter input').each(function() {
+					$(this).val('');
+				});
+
+				dtInstance.fnFilterClear();
+			});
+
+			// Initial filter values
+			// Generates a 'TypeError: c is undefined' which means that by the time of init filtering
+			// the DOM of table is not ready yet
+			// Ugly solution: save original state of bProcessing, de the initial filtering
+			// and restore bProcessing original value
+			dtInstance.find('.filter').each(function() {
+				var bProcessing = dtInstance.fnSettings().oFeatures.bProcessing;
+				dtInstance.fnSettings().oFeatures.bProcessing = false;
+				var inputs = $(this).find('input, select');
+				inputs.each(function(index, el) {
+					if ($(el).val())
+					{
+						dtInstance.fnFilter($(el).val(), index);
+					}
+				});
+				dtInstance.fnSettings().oFeatures.bProcessing = bProcessing;
 			});
 		});
 
