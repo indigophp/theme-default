@@ -32,6 +32,17 @@ var IndigoAdmin = (function() {
 					var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
 					// length_sel.addClass('form-control input-sm');
 					length_sel.selectpicker().selectpicker('setStyle', 'btn-sm', 'add');
+
+					// Initial filter values
+					datatable.find('.filter').each(function() {
+						var inputs = $(this).find('input, select');
+						inputs.each(function(index, el) {
+							if ($(el).val())
+							{
+								datatable.fnFilter($(el).val(), index);
+							}
+						});
+					});
 				},
 				"fnServerData": function(sSource, aoData, fnCallback) {
 					$.each($(this).data(), function(index, val) {
@@ -84,24 +95,6 @@ var IndigoAdmin = (function() {
 				});
 
 				dtInstance.fnFilterClear();
-			});
-
-			// Initial filter values
-			// Generates a 'TypeError: c is undefined' which means that by the time of init filtering
-			// the DOM of table is not ready yet
-			// Ugly solution: save original state of bProcessing, de the initial filtering
-			// and restore bProcessing original value
-			dtInstance.find('.filter').each(function() {
-				var bProcessing = dtInstance.fnSettings().oFeatures.bProcessing;
-				dtInstance.fnSettings().oFeatures.bProcessing = false;
-				var inputs = $(this).find('input, select');
-				inputs.each(function(index, el) {
-					if ($(el).val())
-					{
-						dtInstance.fnFilter($(el).val(), index);
-					}
-				});
-				dtInstance.fnSettings().oFeatures.bProcessing = bProcessing;
 			});
 		});
 
