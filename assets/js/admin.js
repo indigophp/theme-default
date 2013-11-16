@@ -14,15 +14,38 @@ var IndigoAdmin = (function() {
 
 		$('.datatables').each(function() {
 
+			// Custom initial filter and column options
 			var filter = []
-			$(this).find('.filter:first').find('input, select').each(function(index, el) {
-				if ($(el).val())
+			var column = []
+			$(this).find('.filter:first').children().each(function(index, el) {
+				// Do initial filtering
+				var val = $(el).find('input, select').val();
+				if (val)
 				{
-					filter.push({'sSearch': $(el).val()});
+					filter.push({'sSearch': val});
 				}
 				else
 				{
 					filter.push(null);
+				}
+
+				// Column options
+				var options = $(el).data('options');
+				if (options) {
+					column[index] = options;
+				}
+				else
+				{
+					column[index] = {};
+				}
+
+				// Special classes to disable search and sort
+				if ($(el).hasClass('no-search')) {
+					column[index].bSearchable = false;
+				}
+
+				if ($(el).hasClass('no-sort')) {
+					column[index].bSortable = false;
 				}
 			});
 
@@ -36,6 +59,7 @@ var IndigoAdmin = (function() {
 				"bServerSide": $(this).data('source') ? true : false,
 				"sAjaxSource": $(this).data('source'),
 				"aoSearchCols": filter,
+				"aoColumns": column,
 				"fnInitComplete": function(oSettings, json) {
 					var datatable = this;
 					// SEARCH - Add the placeholder for Search and Turn this into in-line form control
@@ -91,25 +115,38 @@ var IndigoAdmin = (function() {
 			// Filter syn mechanism across the same inputs, selects
 			// (Assuming that all filter elements are identical to the others)
 			filters.each(function() {
+				var oFilter = filters.not(this);
 				// Do the filtering
-				var controls = $(this).find('input, select');
+				$(this).children().each(function(index, el) {
+					$(el).find('input').on('keypress keyup paste change', function() {
+						oFilter.children().eq(index).find('input').val($(this).val());
+					}).change(function() {
+						dtInstance.fnFilter($(this).val(), index);
+					});
+
+					$(el).find('select').on('change', function() {
+						oFilter.children().eq(index).find('select').val($(this).val()).selectpicker('refresh');
+					}).change(function() {
+						dtInstance.fnFilter($(this).val(), index);
+					});
+				});
 				// var controls = $(this).find('input, select').change(function() {
 				// 	dtInstance.fnFilter($(this).val(), controls.index(this));
 				// });
 
-				// Sync inputs
-				var inputs = $(this).find('input').on('keypress keyup paste change', function() {
-					filters.not(this).find('input:eq(' + inputs.index(this) + ')').val($(this).val());
-				}).change(function() {
-					dtInstance.fnFilter($(this).val(), controls.index(this));
-				});
+				// // Sync inputs
+				// var inputs = $(this).find('input').on('keypress keyup paste change', function() {
+				// 	filters.not(this).find('input:eq(' + inputs.index(this) + ')').val($(this).val());
+				// }).change(function() {
+				// 	dtInstance.fnFilter($(this).val(), controls.index(this));
+				// });
 
-				// Sync selects
-				var selects = $(this).find('select').on('change', function() {
-					filters.not(this).find('select:eq(' + selects.index(this) + ')').val($(this).val()).selectpicker('refresh');
-				}).change(function() {
-					dtInstance.fnFilter($(this).val(), controls.index(this));
-				});
+				// // Sync selects
+				// var selects = $(this).find('select').on('change', function() {
+				// 	filters.not(this).find('select:eq(' + selects.index(this) + ')').val($(this).val()).selectpicker('refresh');
+				// }).change(function() {
+				// 	dtInstance.fnFilter($(this).val(), controls.index(this));
+				// });
 			});
 
 			// Filter reset mechanism
