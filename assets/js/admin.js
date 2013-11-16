@@ -17,6 +17,7 @@ var IndigoAdmin = (function() {
 			// Custom initial filter and column options
 			var filter = []
 			var column = []
+			var aodata = []
 			$(this).find('.filter:first').children().each(function(index, el) {
 				// Do initial filtering
 				var val = $(el).find('input, select').val();
@@ -76,18 +77,6 @@ var IndigoAdmin = (function() {
 						aoData.push({'name': index, 'value': val});
 					});
 
-					$(this).find('.filter').each(function() {
-						var inputs = $(this).find('input, select');
-						inputs.each(function(index, el) {
-							if ($(el).is('select')) {
-								aoData.push({'name': 'cType_'+index, 'value': 'select'});
-							}
-							else if($(el).is('input')) {
-								aoData.push({'name': 'cType_'+index, 'value': $(el).attr('type')});
-							}
-						});
-					});
-
 					$.ajax( {
 						"dataType": 'json',
 						"type": "POST",
@@ -130,23 +119,6 @@ var IndigoAdmin = (function() {
 						dtInstance.fnFilter($(this).val(), index);
 					});
 				});
-				// var controls = $(this).find('input, select').change(function() {
-				// 	dtInstance.fnFilter($(this).val(), controls.index(this));
-				// });
-
-				// // Sync inputs
-				// var inputs = $(this).find('input').on('keypress keyup paste change', function() {
-				// 	filters.not(this).find('input:eq(' + inputs.index(this) + ')').val($(this).val());
-				// }).change(function() {
-				// 	dtInstance.fnFilter($(this).val(), controls.index(this));
-				// });
-
-				// // Sync selects
-				// var selects = $(this).find('select').on('change', function() {
-				// 	filters.not(this).find('select:eq(' + selects.index(this) + ')').val($(this).val()).selectpicker('refresh');
-				// }).change(function() {
-				// 	dtInstance.fnFilter($(this).val(), controls.index(this));
-				// });
 			});
 
 			// Filter reset mechanism
