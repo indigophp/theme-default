@@ -13,6 +13,19 @@ var IndigoAdmin = (function() {
 		console.log('Incorrectly inline styled elements: ', $('[style]:not(.menu-gravatar)'));
 
 		$('.datatables').each(function() {
+
+			var filter = []
+			$(this).find('.filter:first').find('input, select').each(function(index, el) {
+				if ($(el).val())
+				{
+					filter.push({'sSearch': $(el).val()});
+				}
+				else
+				{
+					filter.push(null);
+				}
+			});
+
 			var dtInstance = $(this).dataTable({
 				"oLanguage": {
 					"sUrl": base_url + "translation/datatables.json"
@@ -22,6 +35,7 @@ var IndigoAdmin = (function() {
 				"bProcessing": $(this).data('source') ? true : false,
 				"bServerSide": $(this).data('source') ? true : false,
 				"sAjaxSource": $(this).data('source'),
+				"aoSearchCols": filter,
 				"fnInitComplete": function(oSettings, json) {
 					var datatable = this;
 					// SEARCH - Add the placeholder for Search and Turn this into in-line form control
@@ -32,21 +46,22 @@ var IndigoAdmin = (function() {
 					var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
 					// length_sel.addClass('form-control input-sm');
 					length_sel.selectpicker().selectpicker('setStyle', 'btn-sm', 'add');
-
-					// Initial filter values
-					datatable.find('.filter').each(function() {
-						var inputs = $(this).find('input, select');
-						inputs.each(function(index, el) {
-							if ($(el).val())
-							{
-								datatable.fnFilter($(el).val(), index);
-							}
-						});
-					});
 				},
 				"fnServerData": function(sSource, aoData, fnCallback) {
 					$.each($(this).data(), function(index, val) {
 						aoData.push({'name': index, 'value': val});
+					});
+
+					$(this).find('.filter').each(function() {
+						var inputs = $(this).find('input, select');
+						inputs.each(function(index, el) {
+							if ($(el).is('select')) {
+								aoData.push({'name': 'cType_'+index, 'value': 'select'});
+							}
+							else if($(el).is('input')) {
+								aoData.push({'name': 'cType_'+index, 'value': $(el).attr('type')});
+							}
+						});
 					});
 
 					$.ajax( {
@@ -69,18 +84,31 @@ var IndigoAdmin = (function() {
 			// All select filters should be selectpickers
 			dtInstance.find('.filter select').selectpicker();
 
+			// Find filters
+			var filters = dtInstance.find('.filter');
+
 			// Filter mechanism on filter control change
-			dtInstance.find('.filter').each(function() {
-				var inputs = $(this).find('input, select');
-				inputs.change(function() {
-					if ($(this).is('select'))
-					{
-						dtInstance.fnFilter($(this).val(), inputs.index(this));
-					}
-					else
-					{
-						dtInstance.fnFilter(this.value, inputs.index(this));
-					}
+			// Filter syn mechanism across the same inputs, selects
+			// (Assuming that all filter elements are identical to the others)
+			filters.each(function() {
+				// Do the filtering
+				var controls = $(this).find('input, select');
+				// var controls = $(this).find('input, select').change(function() {
+				// 	dtInstance.fnFilter($(this).val(), controls.index(this));
+				// });
+
+				// Sync inputs
+				var inputs = $(this).find('input').on('keypress keyup paste change', function() {
+					filters.not(this).find('input:eq(' + inputs.index(this) + ')').val($(this).val());
+				}).change(function() {
+					dtInstance.fnFilter($(this).val(), controls.index(this));
+				});
+
+				// Sync selects
+				var selects = $(this).find('select').on('change', function() {
+					filters.not(this).find('select:eq(' + selects.index(this) + ')').val($(this).val()).selectpicker('refresh');
+				}).change(function() {
+					dtInstance.fnFilter($(this).val(), controls.index(this));
 				});
 			});
 
