@@ -15,39 +15,21 @@ var IndigoAdmin = (function() {
 		$('.datatables').each(function() {
 
 			// Custom initial filter and column options
-			var filter = []
-			var column = []
-			var aodata = []
+			var aoSearchCols = []
+			var aoColumns = []
 			$(this).find('.filter:first').children().each(function(index, el) {
 				// Do initial filtering
-				var val = $(el).find('input, select').val();
-				if (val)
-				{
-					filter.push({'sSearch': val});
-				}
-				else
-				{
-					filter.push(null);
-				}
+				var control = $(el).find('input, select');
+				aoSearchCols[index] = control.val() ? {'sSearch': control.val()} : null;
 
 				// Column options
-				var options = $(el).data('options');
-				if (options) {
-					column[index] = options;
-				}
-				else
-				{
-					column[index] = {};
-				}
+				aoColumns[index] = {
+					'bSearchable': ! $(el).hasClass('no-search'),
+					'bSortable': ! $(el).hasClass('no-sort'),
+					'sElementType': control.prop('type')
+				};
 
-				// Special classes to disable search and sort
-				if ($(el).hasClass('no-search')) {
-					column[index].bSearchable = false;
-				}
-
-				if ($(el).hasClass('no-sort')) {
-					column[index].bSortable = false;
-				}
+				$.extend(aoColumns[index], $(el).data('options'));
 			});
 
 			var dtInstance = $(this).dataTable({
@@ -59,8 +41,8 @@ var IndigoAdmin = (function() {
 				"bProcessing": $(this).data('source') ? true : false,
 				"bServerSide": $(this).data('source') ? true : false,
 				"sAjaxSource": $(this).data('source'),
-				"aoSearchCols": filter,
-				"aoColumns": column,
+				"aoSearchCols": aoSearchCols,
+				"aoColumns": aoColumns,
 				"fnInitComplete": function(oSettings, json) {
 					var datatable = this;
 					// SEARCH - Add the placeholder for Search and Turn this into in-line form control
@@ -72,9 +54,13 @@ var IndigoAdmin = (function() {
 					// length_sel.addClass('form-control input-sm');
 					length_sel.selectpicker().selectpicker('setStyle', 'btn-sm', 'add');
 				},
-				"fnServerData": function(sSource, aoData, fnCallback) {
+				"fnServerData": function(sSource, aoData, fnCallback, oSettings) {
 					$.each($(this).data(), function(index, val) {
 						aoData.push({'name': index, 'value': val});
+					});
+
+					$.each(oSettings.aoColumns, function(index, val) {
+						aoData.push({'name': 'sElementType_'+index, 'value': val.sElementType});
 					});
 
 					$.ajax( {
