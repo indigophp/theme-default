@@ -38,6 +38,9 @@ var IndigoAdmin = (function() {
 					case 'none':
 					case false:
 					case '':
+					case 'null':
+					case null:
+					case undefined:
 						var val = false;
 						control = false;
 						filter = 'none';
@@ -93,7 +96,7 @@ var IndigoAdmin = (function() {
 				"bServerSide": $(this).data('source') ? true : false,
 				"sAjaxSource": $(this).data('source'),
 				"aoSearchCols": aoSearchCols,
-				"aoColumns": aoColumns,
+				"aoColumns": aoColumns.length > 0 ? aoColumns : null,
 				"fnInitComplete": function(oSettings, json) {
 					var datatable = this;
 					// SEARCH - Add the placeholder for Search and Turn this into in-line form control
@@ -140,7 +143,6 @@ var IndigoAdmin = (function() {
 			// Filter mechanism on filter control change
 			// Filter syn mechanism across the same inputs, selects
 			// (Assuming that all filter groups are identical to the others)
-				console.log(controls);
 			$.each(controls, function(index, el) {
 				if (el.filter !== 'none') {
 					var c = filters.children('[data-filter]:nth-child(' + (index+1) + ')').find(el.control);
@@ -166,13 +168,30 @@ var IndigoAdmin = (function() {
 							});
 							break;
 						case 'range':
-							c.change(function() {
-								var val = [];
-								c.each(function(i, e) {
-									val[i] = $(e).val();
-								});
+							var odd = c.filter(':odd');
+							var even = c.filter(':even');
+
+							odd.change(function(event) {
+								var val = [
+									even.eq($(this).index()).val(),
+									$(this).val()
+								];
 								dtInstance.fnFilter(JSON.stringify(val), index);
-							}).on('reset', function() {
+							}).on('keypress keyup paste change', function(event) {
+								odd.val($(this).val());
+							});
+
+							even.change(function(event) {
+								var val = [
+									$(this).val(),
+									odd.eq($(this).index()).val()
+								];
+								dtInstance.fnFilter(JSON.stringify(val), index);
+							}).on('keypress keyup paste change', function(event) {
+								even.val($(this).val());
+							});
+
+							c.on('reset', function() {
 								$(this).val('');
 							});
 							break;
@@ -183,99 +202,11 @@ var IndigoAdmin = (function() {
 					});
 				}
 			});
-			// filters.each(function(i, filter) {
-			// 	// Loop children
-			// 	$(this).children('[data-filter]').each(function(index, el) {
-			// 		var control = $(el).find(controls[index]);
-			// 		var val;
 
-			// 		// Do the filtering
-			// 		switch($(el).data('filter')) {
-			// 			case 'text':
-			// 			case 'number':
-			// 				control.change(function() {
-			// 					dtInstance.fnFilter(JSON.stringify($(this).val()), index);
-			// 				}).on('reset', function() {
-			// 					$(this).val('');
-			// 				});
-			// 				break;
-			// 			case 'select':
-			// 				control.on('change', function() {
-			// 					dtInstance.fnFilter(JSON.stringify($(this).val()), index);
-			// 				}).on('reset', function() {
-			// 					$(this).val([]).selectpicker('render');
-			// 				});
-			// 				break;
-			// 			case 'range':
-			// 				control.change(function() {
-			// 					var val = [];
-			// 					control.each(function(i, e) {
-			// 						val[i] = $(e).val();
-			// 					});
-			// 					dtInstance.fnFilter(JSON.stringify(val), index);
-			// 				}).on('reset', function() {
-			// 					$(this).val('');
-			// 				});
-			// 				break;
-			// 		}
-
-			// 		// Filter reset mechanism (reset controls)
-			// 		$(filters).find('[type=reset]').click(function() {
-			// 			control.trigger('reset');
-			// 		});
-			// 	});
-			// });
-
-
-
-
-
-			// filters.each(function(i, filter) {
-			// 	// Loop children
-			// 	$(this).children('[data-filter]').each(function(index, el) {
-			// 		var control = $(el).find(controls[index]);
-			// 		var val;
-
-			// 		// Do the filtering
-			// 		switch($(el).data('filter')) {
-			// 			case 'text':
-			// 			case 'number':
-			// 				control.change(function() {
-			// 					dtInstance.fnFilter(JSON.stringify($(this).val()), index);
-			// 				}).on('reset', function() {
-			// 					$(this).val('');
-			// 				});
-			// 				break;
-			// 			case 'select':
-			// 				control.on('change', function() {
-			// 					dtInstance.fnFilter(JSON.stringify($(this).val()), index);
-			// 				}).on('reset', function() {
-			// 					$(this).val([]).selectpicker('render');
-			// 				});
-			// 				break;
-			// 			case 'range':
-			// 				control.change(function() {
-			// 					var val = [];
-			// 					control.each(function(i, e) {
-			// 						val[i] = $(e).val();
-			// 					});
-			// 					dtInstance.fnFilter(JSON.stringify(val), index);
-			// 				}).on('reset', function() {
-			// 					$(this).val('');
-			// 				});
-			// 				break;
-			// 		}
-
-			// 		// Filter reset mechanism (reset controls)
-			// 		$(filters).find('[type=reset]').click(function() {
-			// 			control.trigger('reset');
-			// 		});
-			// 	});
-			// });
-
-			// Filter reset mechanism (reset table)
+			// Filter and sorting reset mechanism (reset table)
 			$(this).find('[type=reset]').click(function() {
 				dtInstance.fnFilterClear();
+				dtInstance.fnSortNeutral();
 			});
 		});
 
