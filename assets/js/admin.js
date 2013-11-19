@@ -251,15 +251,22 @@ var IndigoAdmin = (function() {
 	}
 
 	function addFastButton (title, icon, callback) {
-		icon = (typeof icon !== 'undefined' && icon !== null && icon !== '') ? '<span class="glyphicon glyphicon-' + icon + '"></span>' : '';
+		icon = (typeof icon !== 'undefined' && icon !== null && icon !== '') ? '<span class="' + icon + '"></span>' : '';
 		title = (typeof title !== 'undefined' && title !== null && title !== '') ? title : '';
 		if (title + icon == '') {
 			console.error('You must supply at least one of title and icon.');
 			return;
 		}
-		var elementHtml = '<li><a href="#">' + icon + ((title != '' && icon != '') ? ' &nbsp; ' : '' ) + title + '</a></li>';
-		var element = $(elementHtml);
-		element.find('a').click(function() { callback(); return false; });
+
+		if (typeof callback == "string") {
+			var elementHtml = '<li><a href="' + callback + '">' + icon + ((title != '' && icon != '') ? ' &nbsp; ' : '' ) + title + '</a></li>';
+			var element = $(elementHtml);
+		} else {
+			var elementHtml = '<li><a href="#">' + icon + ((title != '' && icon != '') ? ' &nbsp; ' : '' ) + title + '</a></li>';
+			var element = $(elementHtml);
+			element.find('a').click(function() { callback(); return false; });
+		}
+
 		element.prependTo('html body div.navbar div.hidden-xs ul.nav');
 	}
 
