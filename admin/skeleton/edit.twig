@@ -1,0 +1,6 @@
+{% extends 'admin/layout.twig' %}
+
+{% block documentready %}
+	IndigoAdmin.addProxyButton('{% trans 'Save' %}', 'glyphicon glyphicon-save', '#form-button-save');
+	IndigoAdmin.addFastButton('{% trans 'Back' %}', 'glyphicon glyphicon-arrow-left', '{{ base_url() }}admin/{{ request().module }}');
+{% endblock %}
