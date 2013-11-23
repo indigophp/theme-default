@@ -13,8 +13,7 @@
 						<span class="{{ item.icon | default('glyphicon glyphicon-chevron-right') }}"></span>
 					{% endif %}
 					<span class="label label-primary pull-right">{{ item.badge }}</span>
-					{% set name = item.name %}
-					{% trans name %}
+					{{ item.name }}
 					<b class="caret"></b>
 				</button>
 				{% include 'admin/menu.twig' with {'items': item.children, 'class': 'collapse', 'id': index} %}
@@ -24,8 +23,7 @@
 						<span class="{{ item.icon | default('glyphicon glyphicon-chevron-right') }}"></span>
 					{% endif %}
 					<span class="label label-primary pull-right">{{ item.badge }}</span>
-					{% set name = item.name %}
-					{% trans name %}
+					{{ item.name }}
 				</a>
 			{% endif %}
 		</li>
