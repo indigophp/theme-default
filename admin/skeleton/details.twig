@@ -1,5 +1,0 @@
-{% extends 'admin/layout.twig' %}
-
-{% block documentready %}
-	IndigoAdmin.addFastButton('{% trans 'Back' %}', 'glyphicon glyphicon-arrow-left', '{{ base_url() }}admin/{{ request().module }}');
-{% endblock %}

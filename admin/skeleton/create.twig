@@ -1,6 +1,17 @@
 {% extends 'admin/layout.twig' %}
 
+{% block title %}{% trans %}New {{ module_name }}{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<h2>{% trans %}New {{ module_name }}{% endtrans %} <small>{% trans %}Create a new {{ module_name }}{% endtrans %}</small></h2>
+
+{% include 'form.twig' %}
+
+{% endblock %}
+
 {% block documentready %}
+	$('select').selectpicker();
 	IndigoAdmin.addProxyButton('{% trans 'Save' %}', 'glyphicon glyphicon-save', '#form-button-save');
-	IndigoAdmin.addFastButton('{% trans 'Back' %}', 'glyphicon glyphicon-arrow-left', '{{ base_url() }}admin/{{ request().module }}');
+	IndigoAdmin.addFastButton('{% trans 'Back' %}', 'glyphicon glyphicon-arrow-left', '{{ uri }}');
 {% endblock %}

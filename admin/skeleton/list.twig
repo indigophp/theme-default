@@ -1,0 +1,55 @@
+{% extends 'admin/layout.twig' %}
+
+{% block title %}{{ module_name|capitalize|pluralize }}{% endblock %}
+
+{% block content %}
+<h2>{% trans title %} <small>{% set title = module_name|pluralize %}{% trans %}List of {{ title }}{% endtrans %}</small></h2>
+
+{% if auth_has_access(module ~ '.create') %}
+	<p>
+		<a href="{{ uri }}/create" class="hidden-print btn btn-success"><span class="glyphicon glyphicon-plus"></span> {% trans %}Create new {{ module_name }}{% endtrans %}</a>
+	</p>
+{% endif %}
+<div class="panel panel-default">
+	<table class="datatables table table-striped table-hover" data-source="{{ uri }}.json">
+		<thead>
+			{% block _filter %}
+				<tr class="filter">
+					{% for key, item in model.lists() %}
+						<td data-filter="{{ item.list.type }}">
+							{% set config = {
+									'attributes': {
+										'name': key,
+										'id': item.list.type ~ key|capitalize,
+										'placeholder': item.label,
+									},
+									'value': item.list.default,
+									'options': model.options(key)
+							}%}
+							{% include 'admin/skeleton/filter/' ~ item.list.type ~ '.twig' with config %}
+						</td>
+					{% endfor %}
+					<td data-filter="none" class="hidden-print no-sort"><button type="reset" class="btn btn-default">{% trans 'Reset filters' %}</button></td>
+				</tr>
+			{% endblock %}
+			<tr>
+				{% for item in model.lists() %}
+					<th>{{ item.label }}</th>
+				{% endfor %}
+				<th class="hidden-print" style="width: 140px;"></th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+		<tfoot>
+			{{ block('_filter') }}
+		</tfoot>
+	</table>
+</div>
+
+{% if auth_has_access(module ~ '.create') %}
+	<p>
+		<a href="{{ uri }}/create" class="hidden-print btn btn-success"><span class="glyphicon glyphicon-plus"></span> Create new {{ module_name }}</a>
+	</p>
+{% endif %}
+
+{% endblock %}
