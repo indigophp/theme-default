@@ -1,15 +1,20 @@
 {% extends 'admin/layout.twig' %}
 
-{% block title %}{{ module_name|capitalize|pluralize }}{% endblock %}
+{% set thing = module_name[0] %}
+{% set things = module_name[1] %}
+{% block title %}{{ things|capitalize }}{% endblock %}
 
 {% block content %}
-<h2>{% trans title %} <small>{% set title = module_name|pluralize %}{% trans %}List of {{ title }}{% endtrans %}</small></h2>
+<h2>{{ block('title') }} <small>{% filter capitalize %}{% trans %}List of {{ things }}{% endtrans %}{% endfilter %}</small></h2>
 
-{% if auth_has_access(module ~ '.create') %}
-	<p>
-		<a href="{{ uri }}/create" class="hidden-print btn btn-success"><span class="glyphicon glyphicon-plus"></span> {% trans %}Create new {{ module_name }}{% endtrans %}</a>
-	</p>
-{% endif %}
+{% block create %}
+	{% if auth_has_access(module ~ '.create') %}
+		<p>
+			<a href="{{ uri }}/create" class="hidden-print btn btn-success"><span class="glyphicon glyphicon-plus"></span> {% trans %}Create new {{ thing }}{% endtrans %}</a>
+		</p>
+	{% endif %}
+{% endblock %}
+
 <div class="panel panel-default">
 	<table class="datatables table table-striped table-hover" data-source="{{ uri }}.json">
 		<thead>
@@ -46,10 +51,6 @@
 	</table>
 </div>
 
-{% if auth_has_access(module ~ '.create') %}
-	<p>
-		<a href="{{ uri }}/create" class="hidden-print btn btn-success"><span class="glyphicon glyphicon-plus"></span> Create new {{ module_name }}</a>
-	</p>
-{% endif %}
+{{ block('create') }}
 
 {% endblock %}

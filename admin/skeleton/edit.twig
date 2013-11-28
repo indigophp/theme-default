@@ -1,10 +1,12 @@
 {% extends 'admin/layout.twig' %}
 
-{% block title %}{% trans %}Edit {{ module_name }}{% endtrans %}{% endblock %}
+{% set thing = module_name[1] %}
+
+{% block title %}{% filter capitalize %}{% trans %}Edit {{ thing }}{% endtrans %}{% endfilter %}{% endblock %}
 
 {% block content %}
 
-<h2>{% trans %}Edit {{ module_name }}{% endtrans %} <small>#{{ model.id }}</small></h2>
+<h2>{{ block('title') }} <small>#{{ model.id }}</small></h2>
 
 {% include 'form.twig' %}
 

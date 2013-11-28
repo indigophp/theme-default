@@ -2,7 +2,7 @@
 	<div class="panel panel-{{ request().action == 'create' ? 'success' : 'info' }}">
 		<div class="panel-heading">
 			<div class="panel-title">
-				{% trans %}{{ module_name }} details{% endtrans %}
+				{% filter capitalize %}{% trans %}{{ thing }} details{% endtrans %}{% endfilter %}
 			</div>
 		</div>
 		<div class="panel-body">
