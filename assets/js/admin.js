@@ -19,7 +19,7 @@ var IndigoAdmin = (function() {
 			var aoColumns = [];
 			var controls = [];
 			$(this).find('.filter:first').children('[data-filter]').each(function(index, el) {
-				var control = $(el).data('control');
+				var control = $(el).data('control') ? $(el).data('control') : undefined;
 				var filter = $(el).data('filter');
 				var val;
 
@@ -206,7 +206,7 @@ var IndigoAdmin = (function() {
 			// Filter and sorting reset mechanism (reset table)
 			$(this).find('[type=reset]').click(function() {
 				dtInstance.fnFilterClear();
-				dtInstance.fnSortNeutral();
+				// dtInstance.fnSortNeutral();
 			});
 		});
 
