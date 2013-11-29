@@ -45,9 +45,9 @@
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="{{ base_url() }}admin/profile">{% trans 'Profile' %}</a></li>
+						<li><a href="{{ admin_url() }}profile">{% trans 'Profile' %}</a></li>
 						<li class="divider"></li>
-						<li><a href="{{ base_url() }}admin/logout">{% trans 'Sign out' %}</a></li>
+						<li><a href="{{ admin_url() }}logout">{% trans 'Sign out' %}</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -67,8 +67,8 @@
 									<b class="caret"></b>
 								</button>
 								<ul class="collapse" id="account-menu">
-									<li><a href="{{ base_url() }}admin/profile">{% trans 'Profile' %}</a></li>
-									<li><a href="{{ base_url() }}admin/logout">{% trans 'Sign out' %}</a></li>
+									<li><a href="{{ admin_url() }}profile">{% trans 'Profile' %}</a></li>
+									<li><a href="{{ admin_url() }}logout">{% trans 'Sign out' %}</a></li>
 								</ul>
 							</li>
 						</ul>
