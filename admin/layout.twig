@@ -45,9 +45,9 @@
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="{{ base_url() }}admin/profile">{% trans 'Profile' %}</a></li>
+						<li><a href="{{ admin_url() }}profile">{% trans 'Profile' %}</a></li>
 						<li class="divider"></li>
-						<li><a href="{{ base_url() }}admin/logout">{% trans 'Sign out' %}</a></li>
+						<li><a href="{{ admin_url() }}logout">{% trans 'Sign out' %}</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -67,8 +67,8 @@
 									<b class="caret"></b>
 								</button>
 								<ul class="collapse" id="account-menu">
-									<li><a href="{{ base_url() }}admin/profile">{% trans 'Profile' %}</a></li>
-									<li><a href="{{ base_url() }}admin/logout">{% trans 'Sign out' %}</a></li>
+									<li><a href="{{ admin_url() }}profile">{% trans 'Profile' %}</a></li>
+									<li><a href="{{ admin_url() }}logout">{% trans 'Sign out' %}</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -129,9 +129,14 @@
 
 	{% block javascript %}
 	<script src="{{ base_url() }}assets/theme/js/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+	<script src="{{ base_url() }}assets/theme/js/ckeditor/ckeditor.js"></script>
+	<script src="{{ base_url() }}assets/theme/js/ckeditor/adapters/jquery.js"></script>
 	<script src="{{ base_url() }}assets/theme/js/bootstrap.min.js"></script>
 	<script src="{{ base_url() }}assets/theme/js/bootstrap-switch.min.js"></script>
 	<script src="{{ base_url() }}assets/theme/js/bootstrap-select.min.js"></script>
+	<script src="{{ base_url() }}assets/theme/js/moment-with-langs.min.js"></script>
+	<script src="{{ base_url() }}assets/theme/js/bootstrap-datetimepicker.min.js"></script>
 	<script src="{{ base_url() }}assets/theme/js/jquery.dataTables.min.js"></script>
 	<script src="{{ base_url() }}assets/theme/js/datatables.js"></script>
 	<script src="{{ base_url() }}assets/theme/js/admin.js"></script>
@@ -139,10 +144,6 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			IndigoAdmin.pageInit('{{ base_url() }}');
-			// IndigoAdmin.addFastButton('Save', 'save', function() {
-			// 	var url = $('.menu-gravatar').css('background-image').replace(/url\("(.*)"\)/g, '$1');
-			// 	IndigoAdmin.displayNotification('Title', 'Body of the notification.', url);
-			// });
 			{% block documentready %}{% endblock %}
 		});
 	</script>
