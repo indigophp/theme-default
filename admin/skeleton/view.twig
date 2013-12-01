@@ -1,37 +1,45 @@
 {% extends 'admin/layout.twig' %}
 
-{% set thing = module_name[0] %}
-{% block title %}{% filter capitalize %}{% trans %}{{ thing }} details{% endtrans %}{% endfilter %}{% endblock %}
+{% set item = module_name[0] %}
 
 {% block content %}
-<h2>{{ block('title')}} <small>#{{ model.id }}</small></h2>
+<h2>{{ title }} <small>#{{ model.id }}</small></h2>
 
 <div class="panel panel-primary">
 	<div class="panel-heading">
-		<div class="panel-title">{% filter capitalize %}{% trans %}{{ thing }} details{% endtrans %}{% endfilter %}</div>
+		<div class="panel-title">{% filter capitalize %}{% trans %}{{ item }} details{% endtrans %}{% endfilter %}</div>
 	</div>
 	<table class="table table-striped">
 		<tbody>
 			{% for key, item in model.view() %}
 				<tr>
 					<th>{{ item.label }}</th>
-					<td>{{ attribute(model, key)|nl2br|default('<i>Null</i>') }}</td>
+					<td>{{ _self._attribute(model, key)|trim|nl2br|default('<i>None</i>') }}</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 	<div class="panel-footer">
 		{% if auth_has_access(module ~ '.edit') %}
-				<a href="{{ uri }}edit/{{ model.id }}" class="hidden-print btn btn-success"><span class="glyphicon glyphicon-edit"></span> {% trans 'Edit' %}</a>
+				<a href="{{ url }}/edit/{{ model.id }}" class="hidden-print btn btn-success"><span class="glyphicon glyphicon-edit"></span> {% trans 'Edit' %}</a>
 		{% endif %}
 		{% if auth_has_access(module ~ '.delete')  %}
-			<a href="{{ uri }}delete/{{ model.id }}" class="hidden-print btn btn-danger"><span class="glyphicon glyphicon-remove"></span> {% trans 'Delete' %}</a>
+			<a href="{{ url }}/delete/{{ model.id }}" class="hidden-print btn btn-danger"><span class="glyphicon glyphicon-remove"></span> {% trans 'Delete' %}</a>
 		{% endif %}
 	</div>
 </div>
 
 {% endblock %}
 
+{% macro _attribute(object, key, i = 0) %}
+	{% set k = key|split('.') %}
+	{% if k|length - 1 > i %}
+		{{ _self._attribute(attribute(object, k[i]), key, i + 1) }}
+	{% else %}
+		{{ attribute(object, k[i]) }}
+	{% endif %}
+{% endmacro %}
+
 {% block documentready %}
-	IndigoAdmin.addFastButton('{% trans 'Back' %}', 'glyphicon glyphicon-arrow-left', '{{ uri }}');
+	IndigoAdmin.addFastButton('{% trans 'Back' %}', 'glyphicon glyphicon-arrow-left', '{{ url }}/');
 {% endblock %}

@@ -1,2 +1,6 @@
 {% set attributes = attributes|merge(['multiple']) %}
-{% include 'admin/form/select.twig' %}
+<select {{ attributes|attr }}>
+	{% for key, item in options %}
+		<option value="{{ key }}" {% if key in value or key is sameas(value) %}selected{% endif %}>{{ item }}</option>
+	{% endfor %}
+</select>
