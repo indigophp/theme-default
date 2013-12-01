@@ -208,6 +208,23 @@ var IndigoAdmin = (function() {
 				dtInstance.fnFilterClear();
 				// dtInstance.fnSortNeutral();
 			});
+		}); // end .datatables each
+
+		$('.datetime').each(function() {
+			$(this).datetimepicker({
+				'language' : 'hu-HU',
+				icons: {
+					time: "fa fa-clock-o",
+					date: "fa fa-calendar",
+					up: "fa fa-arrow-up",
+					down: "fa fa-arrow-down"
+				}
+			});
+		});
+		$('.ckedit').each(function() {
+			$(this).ckeditor({
+				'language' : 'hu-HU',
+			});
 		});
 
 		try {
