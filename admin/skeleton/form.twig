@@ -6,7 +6,7 @@
 			</div>
 		</div>
 		<div class="panel-body">
-			{% for key, item in model.form() %}
+			{% for key, item in model.form(true) %}
 				{% if item.properties %}
 					<fieldset>
 						<legend>{{ item.label }}</legend>
