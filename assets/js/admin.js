@@ -26,6 +26,7 @@ var IndigoAdmin = (function() {
 				switch(filter) {
 					case 'text':
 					case 'number':
+					case 'date':
 						if(control === undefined) {
 							control = 'input:first';
 						}
@@ -151,6 +152,7 @@ var IndigoAdmin = (function() {
 					switch(el.filter) {
 						case 'text':
 						case 'number':
+						case 'date':
 							c.change(function() {
 								dtInstance.fnFilter(JSON.stringify($(this).val()), index);
 							}).on('reset', function() {
