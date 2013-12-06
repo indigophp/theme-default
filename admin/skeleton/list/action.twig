@@ -1,0 +1,5 @@
+<div class="hidden-print btn-group btn-group-sm" style="width:{{ (actions|length) * 34 }}px">
+	{% for item in actions %}
+		<a href="{{ item.url }}" class="btn btn-default" {{ item.attributes|attr }}><span class="{{ item.icon }}"></span></a>
+	{% endfor %}
+</div>
