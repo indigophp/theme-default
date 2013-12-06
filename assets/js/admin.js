@@ -227,6 +227,9 @@ var IndigoAdmin = (function() {
 			$(this).ckeditor({
 				'language' : 'hu-HU',
 			});
+			CKEDITOR.on('instanceReady', function(event) {
+				$('.cke_toolgroup:has(.cke_button__find, .cke_button__qrc, .cke_button__about), .cke_button__anchor, .cke_button__mathjax, .cke_button__cut, .cke_button__paste, .cke_button__copy, .cke_button__pastetext, .cke_button__pastefromword, .cke_button__pastefromword + .cke_toolbar_separator, .cke_button__table, .cke_button__horizontalrule, .cke_button__specialchar').addClass('hidden-xs');
+			});
 		});
 
 		try {
