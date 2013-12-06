@@ -98,6 +98,7 @@ var IndigoAdmin = (function() {
 				"sAjaxSource": $(this).data('source'),
 				"aoSearchCols": aoSearchCols,
 				"aoColumns": aoColumns.length > 0 ? aoColumns : null,
+				"aaSorting": $(this).data('sorting') ? $(this).data('sorting') : [],
 				"fnInitComplete": function(oSettings, json) {
 					var datatable = this;
 					// SEARCH - Add the placeholder for Search and Turn this into in-line form control
