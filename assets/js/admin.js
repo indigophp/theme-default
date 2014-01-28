@@ -224,6 +224,19 @@ var IndigoAdmin = (function() {
 				}
 			});
 		});
+
+		$('.date').each(function() {
+			$(this).datetimepicker({
+				pickTime: false,
+				'language' : 'hu-HU',
+				icons: {
+					date: "fa fa-calendar",
+					up: "fa fa-arrow-up",
+					down: "fa fa-arrow-down"
+				}
+			});
+		});
+
 		$('.ckedit').each(function() {
 			$(this).ckeditor({
 				'language' : 'hu-HU',
