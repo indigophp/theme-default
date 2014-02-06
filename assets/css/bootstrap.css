@@ -6939,7 +6939,7 @@ body {
   color: #ffffff;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   background-color: #6039ac;
-  background-image: url(http://indigo.teszt.bartatamas.hu/assets/css/img/blueprint.png), url(http://indigo.teszt.bartatamas.hu/assets/css/img/blueprint.png), url(http://indigo.teszt.bartatamas.hu/assets/css/img/blueprint.png);
+  background-image: url(img/blueprint.png);
 }
 
 .navbar-toggle {
