@@ -21,7 +21,7 @@
 							'id': item.form.type ~ key|capitalize,
 							'placeholder': item.label
 						},
-						'value': attribute(model, key),
+						'value': attribute(model, key)|default(item.default),
 						'options': model.options(key)
 					}%}
 					{% if 'required' in item.form.validation %}{% set options = options|merge({'attributes': {'required':'required'}}) %}{% endif %}

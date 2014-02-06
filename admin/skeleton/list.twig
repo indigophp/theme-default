@@ -20,7 +20,7 @@
 			{% block _filter %}
 				<tr class="filter">
 					{% for key, item in model.lists() %}
-						<td data-filter="{{ item.list.type }}">
+						<td data-filter="{{ item.list.type }}" class="{% if item.list.sort is sameas(false) %}no-sort{% endif %}">
 							{% set config = {
 									'attributes': {
 										'name': key,
@@ -37,8 +37,12 @@
 				</tr>
 			{% endblock %}
 			<tr>
-				{% for item in model.lists() %}
-					<th>{{ item.label }}</th>
+				{% for key,item in model.lists() %}
+					{% if key == 'id' %}
+						<th style="width: 100px">#</th>
+					{% else %}
+						<th>{{ item.label }}</th>
+					{% endif %}
 				{% endfor %}
 				<th class="hidden-print" style="width: 140px;"></th>
 			</tr>

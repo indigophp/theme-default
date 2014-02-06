@@ -13,7 +13,7 @@
 		<tbody>
 			{% for key, item in model.view() %}
 				<tr>
-					<th>{{ item.label }}</th>
+					<td>{{ item.label }}</td>
 					<td>{{ _self._attribute(model, key)|trim|nl2br|default('<i>None</i>') }}</td>
 				</tr>
 			{% endfor %}
