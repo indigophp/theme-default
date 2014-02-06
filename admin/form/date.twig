@@ -1,5 +1,5 @@
 <div class='input-group date'>
-	<input type="text" class="form-control" data-format="YYYY-MM-DD" {{ attributes|attr }} value="{{ value.format('mysql_date') }}">
+	<input type="text" class="form-control" data-format="YYYY-MM-DD" {{ attributes|attr }} value="{{ value.format('mysql_date')|default(value) }}">
 
 	<span class="input-group-addon">
 		<span data-icon-element="" class="fa fa-calendar"></span>
