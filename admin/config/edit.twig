@@ -1,0 +1,72 @@
+{% extends 'admin/layout.twig' %}
+
+{% block content %}
+	<h2>{{ title }} <small>config</small></h2>
+
+	<form action="{{ action|default(current_url()) }}" class="form-horizontal" method="post" role="form">
+		<div class="panel panel-{{ request().action == 'create' ? 'success' : 'info' }}">
+			<div class="panel-heading">
+				<div class="panel-title">
+					{% filter capitalize %}{% trans %}{{ item }} details{% endtrans %}{% endfilter %}
+				</div>
+			</div>
+			<div class="panel-body">
+				{% for key, item in model.form(true) %}
+					{% if item.properties %}
+						<fieldset>
+							<legend>{{ item.label }}</legend>
+							{% for i, el in item.properties %}
+								{{ _self.form(el, i, model) }}
+							{% endfor %}
+						</fieldset>
+					{% else %}
+						{% set options = {
+							'attributes': {
+								'name': key,
+								'id': item.form.type ~ key|capitalize,
+								'placeholder': item.label
+							},
+							'value': attribute(model, key)|default(item.default),
+							'options': item.form.options
+						}%}
+						{% if 'required' in item.form.validation %}{% set options = options|merge({'attributes': {'required':'required'}}) %}{% endif %}
+						<div class="form-group">
+							<label for="{{ options.attributes.id }}" class="col-sm-2 control-label">{{ item.label }}</label>
+							<div class="col-sm-10">
+								{% include 'admin/form/' ~ item.form.type ~ '.twig' with options %}
+							</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+			<div class="panel-footer">
+				<button type="submit" class="btn btn-success" id="form-button-save"><span class="glyphicon glyphicon-save"></span> {% trans 'Save' %}</button>
+			</div>
+		</div>
+	</form>
+{% endblock %}
+
+{% macro form(item, key, model)%}
+	{% set options = {
+		'attributes': {
+			'name': key,
+			'id': item.form.type ~ key|capitalize,
+			'placeholder': item.label
+		},
+		'value': attribute(model, key),
+		'options': item.form.options
+	}%}
+	{% if 'required' in item.form.validation %}{% set options = options|merge({'attributes': {'required':'required'}}) %}{% endif %}
+	<div class="form-group">
+		<label for="{{ options.attributes.id }}" class="col-sm-2 control-label">{{ item.label }}</label>
+		<div class="col-sm-10">
+			{% include 'admin/form/' ~ item.form.type ~ '.twig' with options %}
+		</div>
+	</div>
+{% endmacro %}
+
+{% block documentready %}
+	$('select').selectpicker();
+	IndigoAdmin.addProxyButton('{% trans 'Save' %}', 'glyphicon glyphicon-save', '#form-button-save');
+	IndigoAdmin.addFastButton('{% trans 'Back' %}', 'glyphicon glyphicon-arrow-left', '{{ url }}/view/{{ model.id }}');
+{% endblock %}

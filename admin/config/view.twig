@@ -1,0 +1,38 @@
+{% extends 'admin/layout.twig' %}
+
+{% block content %}
+<h2>{{ title }} <small>config</small></h2>
+
+{% for key, item in fieldsets if item.properties is not empty %}
+	{% set label = item.label %}
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<div class="panel-title">{% filter capitalize %}{{ label|trans }}{% endfilter %}</div>
+		</div>
+		<table class="table table-striped">
+			<tbody>
+				{% for k, i in item.properties %}
+					<tr>
+						<td>{{ attribute(properties, k).label|default(k) }}</td>
+						<td>{{ i }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="panel-footer">
+			{% if auth_has_access(module ~ '.edit') %}
+					<a href="{{ url }}/edit/{{ model.id }}" class="hidden-print btn btn-success"><span class="glyphicon glyphicon-edit"></span> {% trans 'Edit' %}</a>
+			{% endif %}
+			{% if auth_has_access(module ~ '.delete')  %}
+				<a href="{{ url }}/delete/{{ model.id }}" class="hidden-print btn btn-danger"><span class="glyphicon glyphicon-remove"></span> {% trans 'Delete' %}</a>
+			{% endif %}
+		</div>
+	</div>
+{% endfor %}
+
+
+{% endblock %}
+
+{% block documentready %}
+	IndigoAdmin.addFastButton('{% trans 'Edit' %}', 'glyphicon glyphicon-pencil', 'edit');
+{% endblock %}
