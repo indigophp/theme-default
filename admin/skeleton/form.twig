@@ -22,7 +22,7 @@
 							'placeholder': item.label
 						},
 						'value': attribute(model, key)|default(item.default),
-						'options': model.options(key)
+						'options': item.form.options
 					}%}
 					{% if 'required' in item.form.validation %}{% set options = options|merge({'attributes': {'required':'required'}}) %}{% endif %}
 					<div class="form-group">
@@ -48,7 +48,7 @@
 			'placeholder': item.label
 		},
 		'value': attribute(model, key),
-		'options': model.options(key)
+		'options': item.form.options
 	}%}
 	{% if 'required' in item.form.validation %}{% set options = options|merge({'attributes': {'required':'required'}}) %}{% endif %}
 	<div class="form-group">

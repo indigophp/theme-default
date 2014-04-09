@@ -246,6 +246,10 @@ var IndigoAdmin = (function() {
 			});
 		});
 
+		$('.selectpicker').each(function() {
+			$(this).selectpicker();
+		});
+
 		try {
 			Unity.init({
 				name: "Indigo Admin",

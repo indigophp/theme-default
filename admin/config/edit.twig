@@ -11,33 +11,30 @@
 				</div>
 			</div>
 			<div class="panel-body">
-				{% for key, item in model.form(true) %}
-					{% if item.properties %}
-						<fieldset>
-							<legend>{{ item.label }}</legend>
-							{% for i, el in item.properties %}
-								{{ _self.form(el, i, model) }}
-							{% endfor %}
-						</fieldset>
-					{% else %}
-						{% set options = {
-							'attributes': {
-								'name': key,
-								'id': item.form.type ~ key|capitalize,
-								'placeholder': item.label
-							},
-							'value': attribute(model, key)|default(item.default),
-							'options': item.form.options
-						}%}
-						{% if 'required' in item.form.validation %}{% set options = options|merge({'attributes': {'required':'required'}}) %}{% endif %}
-						<div class="form-group">
-							<label for="{{ options.attributes.id }}" class="col-sm-2 control-label">{{ item.label }}</label>
-							<div class="col-sm-10">
-								{% include 'admin/form/' ~ item.form.type ~ '.twig' with options %}
-							</div>
+		{% for key, item in fieldsets if item.properties is not empty %}
+			{% set label = item.label %}
+			<fieldset>
+				<legend>{% filter capitalize %}{{ label|trans }}{% endfilter %}</legend>
+				{% for k, i in item.properties %}
+					{% set options = {
+						'attributes': {
+							'name': k,
+							'id': attribute(properties, k).type ~ k|capitalize,
+							'placeholder': attribute(properties, k).label|default(k)
+						},
+						'value': i,
+						'options': attribute(properties, k).options
+					}%}
+					{% if 'required' in attribute(properties, k).validation %}{% set options = options|merge({'attributes': {'required':'required'}}) %}{% endif %}
+					<div class="form-group">
+						<label for="{{ options.attributes.id }}" class="col-sm-2 control-label">{{ options.attributes.placeholder }}</label>
+						<div class="col-sm-10">
+							{% include 'admin/form/' ~ attribute(properties, k).type|default('text') ~ '.twig' with options %}
 						</div>
-					{% endif %}
+					</div>
 				{% endfor %}
+			</fieldset>
+		{% endfor %}
 			</div>
 			<div class="panel-footer">
 				<button type="submit" class="btn btn-success" id="form-button-save"><span class="glyphicon glyphicon-save"></span> {% trans 'Save' %}</button>

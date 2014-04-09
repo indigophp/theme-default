@@ -28,7 +28,7 @@
 										'placeholder': item.label,
 									},
 									'value': item.list.default,
-									'options': model.options(key)
+									'options': item.list.options
 							}%}
 							{% include 'admin/skeleton/filter/' ~ item.list.type ~ '.twig' with config %}
 						</td>
