@@ -1,0 +1,6 @@
+<fieldset>
+	<legend>{{ element.getLegend() }}</legend>
+	{% for el in element %}
+		{% include 'admin/form/element.twig' with {'element': el} only %}
+	{% endfor %}
+</fieldset>

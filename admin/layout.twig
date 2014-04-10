@@ -91,11 +91,11 @@
 			<div class="alert alert-dismissable alert-danger">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 				{{ session_get_flash('error') }}
-				{% if val and val.error_message() %}
+				{% if errors %}
 					{% block error_flash %}
 						<ul>
-							{% for item in val.error_message() %}
-								<li>{{ item }}</li>
+							{% for field, error in errors %}
+								<li>{{ field ~ ': ' ~ error }}</li>
 							{% endfor %}
 						</ul>
 					{% endblock %}
