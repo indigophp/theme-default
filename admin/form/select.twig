@@ -1,9 +1,9 @@
-{% if options is empty %}
+{% if element is empty %}
 	<i>{% trans 'There are no options' %}</i>
 {% else %}
-	<select {{ attributes|attr }} {% if options|length > 6 %}data-live-search="true"{% endif %}>
-		{% for key, item in options %}
-			<option value="{{ key }}" {% if key in value or key is sameas(value) %}selected{% endif %}>{{ item }}</option>
+	<select {{ element.getAttributes()|attr }} {% if element|length > 6 %}data-live-search="true"{% endif %}>
+		{% for item in element %}
+			<option value="{{ item.getValue() }}">{{ item.getContent() }}</option>
 		{% endfor %}
 	</select>
 {% endif %}
