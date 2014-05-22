@@ -1,6 +1,6 @@
 {% extends 'admin/layout.twig' %}
 
-{% import "attribute.twig" as _attribute %}
+{% import "admin/skeleton/attribute.twig" as _attribute %}
 
 {% block content %}
 <h2>{{ title }} <small>#{{ model.id }}</small></h2>
@@ -14,7 +14,7 @@
 			{% for key, item in model.view() %}
 				<tr>
 					<td>{{ item.label }}</td>
-					{% if item.form.type == "select" %}
+					{% if item.form.options is not empty %}
 						<td>{{ attribute(item.form.options, _attribute.get(model, key)|trim)|trim|nl2br|default('<i>None</i>') }}</td>
 					{% else %}
 						<td>{{ _attribute.get(model, key)|trim|nl2br|default('<i>None</i>') }}</td>
