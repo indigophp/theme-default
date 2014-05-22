@@ -1,0 +1,10 @@
+{% macro get(object, key, i = 0) %}
+	{% set k = key|split('.') %}
+	{% if k|length - 1 > i %}
+		{% import _self as _attribute %}
+		{{ _attribute.get(attribute(object, k[i]), key, i + 1) }}
+		}
+	{% else %}
+		{{ attribute(object, k[i]) }}
+	{% endif %}
+{% endmacro %}
