@@ -16,29 +16,22 @@
 		<thead>
 			{% block _filter %}
 				<tr class="filter">
-					{% for key, item in model.lists() %}
-						<td data-filter="{{ item.list.type }}" class="{% if item.list.sort is sameas(false) %}no-sort{% endif %}">
-							{% set config = {
-									'attributes': {
-										'name': key,
-										'id': item.list.type ~ key|capitalize,
-										'placeholder': item.label,
-									},
-									'value': item.list.default,
-									'options': item.list.options
-							}%}
-							{% include 'admin/skeleton/filter/' ~ item.list.type ~ '.twig' with config %}
+					{% for element in filters %}
+						<td data-filter="{{ getFormElementType(element) }}" class="{% if item.list.sort is sameas(false) %}no-sort{% endif %}">
+							{% include 'admin/skeleton/filter/' ~ getFormElementTemplate(element) ~ '.twig' with {'element': element} only %}
 						</td>
 					{% endfor %}
-					<td data-filter="none" class="hidden-print no-sort"><button type="reset" class="btn btn-default">{% trans 'Reset filters' %}</button></td>
+					<td data-filter="none" class="hidden-print no-sort">
+						<button type="reset" class="btn btn-default">{% trans 'Reset filters' %}</button>
+					</td>
 				</tr>
 			{% endblock %}
 			<tr>
-				{% for key,item in model.lists() %}
-					{% if key == 'id' %}
+				{% for element in filters %}
+					{% if element.getName() == 'id' %}
 						<th style="width: 100px">#</th>
 					{% else %}
-						<th>{{ item.label }}</th>
+						<th>{{ element.getLabel() }}</th>
 					{% endif %}
 				{% endfor %}
 				<th class="hidden-print" style="width: 140px;"></th>

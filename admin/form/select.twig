@@ -1,9 +1,14 @@
 {% if element is empty %}
 	<i>{% trans 'There are no options' %}</i>
 {% else %}
-	<select {{ element.getAttributes()|attr }} {% if element|length > 6 %}data-live-search="true"{% endif %}>
+	{% set attributes = element.getAttributes() %}
+	{% if element|length > 6 %}
+		{% set attributes = attributes|merge({"data-live-search": "true"}) %}
+	{% endif %}
+
+	<select {{ element.getAttributes()|attr }}>
 		{% for item in element %}
-			<option value="{{ item.getValue() }}">{{ item.getLabel() }}</option>
+			<option {{ item.getAttributes()|attr }}>{{ item.getLabel() }}</option>
 		{% endfor %}
 	</select>
 {% endif %}

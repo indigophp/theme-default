@@ -21,22 +21,3 @@
 		</div>
 	</div>
 </form>
-
-{% macro form(item, key, model)%}
-	{% set options = {
-		'attributes': {
-			'name': key,
-			'id': item.form.type ~ key|capitalize,
-			'placeholder': item.label
-		},
-		'value': attribute(model, key),
-		'options': item.form.options
-	}%}
-	{% if 'required' in item.form.validation %}{% set options = options|merge({'attributes': {'required':'required'}}) %}{% endif %}
-	<div class="form-group">
-		<label for="{{ options.attributes.id }}" class="col-sm-2 control-label">{{ item.label }}</label>
-		<div class="col-sm-10">
-			{% include 'admin/form/' ~ item.form.type ~ '.twig' with options %}
-		</div>
-	</div>
-{% endmacro %}
