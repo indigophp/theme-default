@@ -3,7 +3,7 @@
 {% else %}
 	<select {{ element.getAttributes()|attr }} {% if element|length > 6 %}data-live-search="true"{% endif %}>
 		{% for item in element %}
-			<option value="{{ item.getValue() }}">{{ item.getContent() }}</option>
+			<option value="{{ item.getValue() }}">{{ item.getLabel() }}</option>
 		{% endfor %}
 	</select>
 {% endif %}
