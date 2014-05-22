@@ -1,6 +1,6 @@
 {% extends 'admin/layout.twig' %}
 
-{% set item = module_name[0] %}
+{% import "attribute.twig" as _attribute %}
 
 {% block content %}
 <h2>{{ title }} <small>#{{ model.id }}</small></h2>
@@ -14,7 +14,11 @@
 			{% for key, item in model.view() %}
 				<tr>
 					<td>{{ item.label }}</td>
-					<td>{{ _self._attribute(model, key)|trim|nl2br|default('<i>None</i>') }}</td>
+					{% if item.form.type == "select" %}
+						<td>{{ attribute(item.form.options, _attribute.get(model, key)|trim)|trim|nl2br|default('<i>None</i>') }}</td>
+					{% else %}
+						<td>{{ _attribute.get(model, key)|trim|nl2br|default('<i>None</i>') }}</td>
+					{% endif %}
 				</tr>
 			{% endfor %}
 		</tbody>
@@ -30,15 +34,6 @@
 </div>
 
 {% endblock %}
-
-{% macro _attribute(object, key, i = 0) %}
-	{% set k = key|split('.') %}
-	{% if k|length - 1 > i %}
-		{{ _self._attribute(attribute(object, k[i]), key, i + 1) }}
-	{% else %}
-		{{ attribute(object, k[i]) }}
-	{% endif %}
-{% endmacro %}
 
 {% block documentready %}
 	IndigoAdmin.addFastButton('{% trans 'Back' %}', 'glyphicon glyphicon-arrow-left', '{{ url }}/');

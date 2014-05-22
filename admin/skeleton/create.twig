@@ -1,7 +1,5 @@
 {% extends 'admin/layout.twig' %}
 
-{% set item = module_name[0] %}
-
 {% block content %}
 
 <h2>{{ title }} <small>{% filter capitalize %}{% trans %}Create a new {{ item }}{% endtrans %}{% endfilter %}</small></h2>
