@@ -33,25 +33,10 @@
 				<a class="navbar-brand" href="{{ base_url() }}">{{ site_name }}</a>
 			</div>
 		</div>
-		
 		<!-- </div> -->
 	</div>
 
-
-
-
-	{% if not session_get_flash('error') is null %}
-		<div class="alert alert-dismissable alert-danger">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			{{ session_get_flash('error') }}
-		</div>
-	{% endif %}
-	{% if not session_get_flash('success') is null %}
-		<div class="alert alert-dismissable alert-success">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			{{ session_get_flash('success') }}
-		</div>
-	{% endif %}
+	{% include 'frontend/alert/alert.twig' with vars only %}
 	{% block content %}{% endblock %}
 
 	<div class="container">

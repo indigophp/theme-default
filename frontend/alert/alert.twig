@@ -1,0 +1,3 @@
+{% for template, alert in session_get_flash('alert', []) %}
+	{% include 'admin/alert/' ~ template ~ '.twig' with {'message': alert} %}
+{% endfor %}
