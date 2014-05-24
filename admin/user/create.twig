@@ -1,0 +1,44 @@
+{% extends 'admin/layout.twig' %}
+
+{% block title %}{% trans 'Create User' %}{% endblock %}
+
+{% block content %}
+
+<h2>{% trans 'Create User' %} <small>{% trans 'Define a new user to be created' %}</small></h2>
+
+{% include 'admin/user/form.twig' with { 'action': 'create' } %}
+
+{% endblock %}
+
+{% block documentready %}
+	$('#inputGroup').selectpicker();
+	$('[name=password]').pwstrength();
+	$('[name=password2]').on('input', function() {
+		if ($(this).val() != $('[name=password]').val()) {
+			$(this)[0].setCustomValidity('{% trans 'The two passwords must match.' %}');
+		} else {
+			$(this)[0].setCustomValidity('');
+		}
+	});
+	IndigoAdmin.addProxyButton('{% trans 'Save' %}', 'save', '#form-button-save');
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+	<script src="{{ base_url() }}assets/theme/js/pwstrength.js"></script>
+{% endblock %}
+
+{% block head %}
+	{{ parent() }}
+	<style type="text/css">
+		/*.navbar-default
+		{
+			border-bottom-width: 6px !important;
+			background-color: #222 !important;
+		}
+		.side-navigation
+		{
+			top: 47px !important;
+		}*/
+	</style>
+{% endblock %}

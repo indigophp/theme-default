@@ -1,0 +1,50 @@
+{% extends 'admin/layout.twig' %}
+
+{% block title %}{% trans 'Themes' %}{% endblock %}
+
+{% block content %}
+<h2>{% trans 'Themes' %} <small></small></h2>
+<p class="lead">{% trans 'Chose themes for your frontend, and your admin backend independently.' %}</p>
+
+<div class="row">
+
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="panel-title">
+					{% trans 'Frontend themes' %}
+				</div>
+			</div>
+			<div class="list-group">
+		{% for theme in frontend_themes %}
+				<div class="list-group-item">
+		    		{% include 'admin/themes/theme.twig' with { 'type': 'frontend' } %}
+				</div>
+		{% else %}
+		    <p>{% trans 'You have no themes installed that support the frontend modules.' %}</p>
+		{% endfor %}
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="panel-title">
+					{% trans 'Admin themes' %}
+				</div>
+			</div>
+			<div class="list-group">
+		{% for theme in admin_themes %}
+				<div class="list-group-item">
+		    		{% include 'admin/themes/theme.twig' with { 'type': 'admin' } %}
+				</div>
+		{% else %}
+		    <p>{% trans 'You have no themes installed that support the admin modules.' %}</p>
+		{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

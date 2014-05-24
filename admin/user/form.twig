@@ -1,0 +1,114 @@
+<form action="{{ admin_url() }}auth/{{ action }}/{{ action == 'create' ? '' : model.id }}" class="form-horizontal" method="post" role="form">
+	<div class="panel panel-{{ action == 'create' ? 'success' : 'info' }}">
+		<div class="panel-heading">
+			<div class="panel-title">{% trans 'User details' %}</div>
+		</div>
+		<div class="panel-body">
+
+			<fieldset>
+				<legend>{% trans 'Basic details' %}</legend>
+				<div class="form-group">
+					<label for="inputUsername" class="col-sm-2 control-label">{% trans 'Username' %}</label>
+					<div class="col-sm-10">
+						{% if action == 'edit' %}
+						<p class="form-control-static">{{ model.username }}</p>
+						{% else %}
+						<input name="username" type="text" value="{{ model.username }}" class="form-control" id="inputUsername" placeholder="{% trans 'Username' %}" required pattern="[a-zA-Z0-9-_.]+" title="{% trans 'Please only use letters, numbers, hyphens, underscores, and dots in a username.' %}">
+						{% endif %}
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputEmail" class="col-sm-2 control-label">{% trans 'E-mail' %}</label>
+					<div class="col-sm-10">
+						<input name="email" type="email" value="{{ model.email }}" class="form-control" id="inputEmail" placeholder="{% trans 'E-mail' %}" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputFullname" class="col-sm-2 control-label">{% trans 'Name' %}</label>
+					<div class="col-sm-10">
+						<input name="fullname" type="text" value="{{ model.fullname }}" class="form-control" id="inputFullname" placeholder="{% trans 'Full name' %}" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-5">
+						<input name="firstname" type="text" value="{{ model.firstname }}" class="form-control" id="inputFirstname" placeholder="{% trans 'First name' %}" required>
+					</div>
+					<div class="col-sm-5">
+						<input name="lastname" type="text" value="{{ model.lastname }}" class="form-control" id="inputLastname" placeholder="{% trans 'Last name' %}" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputGroup" class="col-sm-2 control-label">{% trans 'Group' %}</label>
+					<div class="col-sm-10">
+						<select name="group" id="inputGroup">
+							{% for group in groups %}
+							<option value="{{ group.id }}"{% if (group.id == model.group_id|default(default_group)) %} selected="selected"{% endif %}>{{ group.name }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>{% trans 'Password' %}</legend>
+				{% if action == 'edit' %}
+					<div class="form-group">
+						<label for="inputOldPassword" class="col-sm-2 control-label">{% trans 'Old Password' %}</label>
+						<div class="col-sm-10">
+							<input name="old_password" type="password" class="form-control" id="inputOldPassword" placeholder="{% trans 'Old Password' %}" title="{% trans 'Password must be 8 characters long.' %}">
+						</div>
+					</div>
+				{% endif %}
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">{% trans 'Password' %}</label>
+					<div class="col-sm-10">
+						<input name="password" type="password" class="form-control" id="inputPassword" placeholder="{% trans 'Password' %}" {% if not (action == 'edit') %} required pattern=".{8,}"{% endif %} title="{% trans 'Password must be 8 characters long.' %}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword2" class="col-sm-2 control-label">{% trans 'Confirm password' %}</label>
+					<div class="col-sm-10">
+						<input name="password2" type="password" class="form-control" id="inputPassword2" placeholder="{% trans 'Confirm password' %}" {% if not (action == 'edit') %} required pattern=".{8,}"{% endif %} title="{% trans 'Password must be 8 characters long.' %}">
+					</div>
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>{% trans 'Personal' %}</legend>
+				<div class="form-group">
+					<label for="inputGender" class="col-sm-2 control-label">{% trans 'Gender' %}</label>
+					<input name="gender" type="hidden" value="male">
+					<div class="col-sm-10">
+						<div class="make-switch switch-large" tabindex="0" data-on-label="<span class='fa fa-female'></span>" data-off-label="<span class='fa fa-male'></span>">
+							<input name="gender" type="checkbox"{% if model.gender == 'female' %} checked{% endif %} value="female" id="inputGender">
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>{% trans 'Social' %}</legend>
+				<div class="form-group">
+					<label for="inputTwitter" class="col-sm-2 control-label">{% trans 'Twitter account' %}</label>
+					<div class="col-sm-10 input-group">
+						<span class="input-group-addon">@</span>
+						<input name="twitter" type="text" value="{{ model.twitter }}" class="form-control" id="inputTwitter" placeholder="{% trans 'Twitter account' %}" pattern="^[A-Za-z0-9_]{0,15}$" title="{% trans 'You might have mistyped the Twitter username.' %}">
+					</div>
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>{% trans 'Other integrations' %}</legend>
+				<div class="form-group">
+					<label for="inputPushover" class="col-sm-2 control-label">{% trans 'Pushover user key' %}</label>
+					<div class="col-sm-10">
+						<input name="pushover" type="text" value="{{ model.pushover }}" class="form-control" id="inputPushover" placeholder="{% trans 'Pushover user key' %}">
+					</div>
+				</div>
+			</fieldset>
+
+		</div><!-- /.panel-body -->
+		<div class="panel-footer">
+			<button type="submit" class="btn btn-success" id="form-button-save">{% trans 'Save' %}</button>
+		</div>
+	</div><!-- /.panel -->
+</form>

@@ -1,0 +1,49 @@
+{% extends 'admin/layout.twig' %}
+
+{% set fullname = model.fullname %}
+{% set username = model.username %}
+
+{% block title %}{% trans %}Profile of {{ fullname }} ({{ username }}){% endtrans %}{% endblock %}
+
+{% block content %}
+
+<h2>{{ model.fullname }} <small>{{ model.username }}, {{ model.group.name }}</small></h2>
+
+<div class="row">
+	<div class="col-sm-3">
+		<img src="https://secure.gravatar.com/avatar/{{ model.email | md5 }}?s=750&amp;d={{ default_img(model) }}" alt="" class="img-thumbnail">
+	</div>
+	<div class="col-sm-9">
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<th>{% trans 'Username' %}</th>
+					<td>{{ model.username }}</td>
+				</tr>
+				<tr>
+					<th>{% trans 'E-mail' %}</th>
+					<td>{{ model.email }}</td>
+				</tr>
+				<tr>
+					<th>{% trans 'Group' %}</th>
+					<td>{{ model.group.name }}</td>
+				</tr>
+				{% for meta in model.metadata %}
+					{% if not meta.value is empty %}
+						{% set key = meta.key %}
+						<tr>
+							<th>{% trans key %}</th>
+							<td>{{ meta.value }}</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+{% if auth_has_access('user.edit_other') %}
+	<a href="{{ admin_url() }}auth/edit/{{ model.id }}" class="hidden-print btn btn-default">{% trans 'Edit User' %}</a>
+{% endif %}
+
+{% endblock %}

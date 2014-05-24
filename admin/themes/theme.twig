@@ -1,0 +1,9 @@
+<div class="theme-container">
+	<img src="{{ admin_url() }}themes/preview/{{ theme.id }}.png" width="100" height="100" alt="" class="pull-left img-thumbnail">
+	<h3>{{ theme.name }} <small>{{ theme.version }}</small></h3>
+	<p><strong>{% trans 'Author:' %}</strong> {{ theme.author }}</p>
+	<p>
+		<a href="{{ admin_url() }}themes/activate/{{ type }}/{{ theme.id }}" {% if theme.is_active %}disabled{% endif %} class="btn btn-sm btn-success{% if theme.is_active %} active{% endif %}">{% if theme.is_active %}{% trans 'Activated' %}{% else %}{% trans 'Activate' %}{% endif %}</a>
+	</p>
+	<div class="clearfix"></div>
+</div>

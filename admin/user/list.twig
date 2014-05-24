@@ -1,0 +1,73 @@
+{% extends 'admin/layout.twig' %}
+
+{% block title %}{% trans 'Users' %}{% endblock %}
+
+{% block content %}
+<h2>{% trans 'Users' %} <small>{% trans 'Listing users registered in the system' %}</small></h2>
+<!-- <p class="lead">You can manage your users registered in the system here.</p> -->
+
+<p>
+	{% if auth_has_access('users.create') %}
+	<a href="{{ admin_url() }}auth/create" class="hidden-print btn btn-success"><span class="glyphicon glyphicon-plus"></span> {% trans 'Register new user' %}</a>
+	{% endif %}
+</p>
+
+<div class="panel panel-default">
+	<!-- <div class="panel-heading">
+		<div class="panel-title">
+			<span class="glyphicon glyphicon-user"></span>
+			Users
+		</div>
+	</div> -->
+	<table class="datatables table table-striped table-hover" data-source="{{ admin_url() }}auth/ajax/list.json">
+		<thead>
+			<tr class="filter">
+				<td><input type="text" class="form-control"></td>
+				<td><input type="text" class="form-control"></td>
+				<td><input type="text" class="form-control"></td>
+				<td><input type="text" class="form-control"></td>
+				<td>
+					<select multiple title="{% trans 'Nothing selected' %}">
+						{% for item in groups %}
+							<option value="{{ item.id }}">{{ item.name }}</option>
+						{% endfor %}
+					</select>
+				</td>
+				<td class="hidden-print"><button type="reset" class="btn btn-default">{% trans 'Reset filters' %}</button></td>
+			</tr>
+			<tr>
+				<th style="width: 30px">#</th>
+				<th>{% trans 'Username' %}</th>
+				<th>{% trans 'E-mail' %}</th>
+				<th>{% trans 'Full name' %}</th>
+				<th>{% trans 'Group' %}</th>
+				<th class="hidden-print" style="width: 140px;"></th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+		<tfoot>
+			<tr class="filter">
+				<td><input type="text" class="form-control"></td>
+				<td><input type="text" class="form-control"></td>
+				<td><input type="text" class="form-control"></td>
+				<td><input type="text" class="form-control"></td>
+				<td>
+					<select multiple title="{% trans 'Nothing selected' %}">
+						{% for item in groups %}
+							<option value="{{ item.id }}">{{ item.name }}</option>
+						{% endfor %}
+					</select>
+				</td>
+				<td class="hidden-print"><button type="reset" class="btn btn-default">{% trans 'Reset filters' %}</button></td>
+			</tr>
+		</tfoot>
+	</table>
+</div><!-- /.panel -->
+
+<p>
+	{% if auth_has_access('users.create') %}
+	<a href="{{ admin_url() }}auth/create" class="hidden-print btn btn-success"><span class="glyphicon glyphicon-plus"></span> {% trans 'Register new user' %}</a>
+	{% endif %}
+</p>
+
+{% endblock %}

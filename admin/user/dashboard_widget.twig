@@ -1,0 +1,30 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<div class="panel-title">{% trans 'Users' %}</div>
+	</div>
+	<ul class="list-group">
+		<li class="list-group-item">
+			<span class="badge">{{ num_users }}</span>
+			{% trans 'Number of users:' %}
+		</li>
+		<li class="list-group-item">
+			<span class="badge">{{ num_admins }}</span>
+			{% trans 'Number of administrators:' %}
+		</li>
+		<li class="list-group-item">
+			<span class="badge">{{ num_new }}</span>
+			{% trans 'Users registered within a week:' %}
+		</li>
+	</ul>
+	<div class="list-group">
+		<a href="{{ admin_url() }}auth/details/{{ latest.id }}" class="list-group-item">
+				<img width="40" src="https://secure.gravatar.com/avatar/{{ latest.email | md5 }}?s=40&amp;d={{ default_img(latest) }}" alt="" class="pull-left img-rounded">
+			<p class="list-group-item-text"> &nbsp; {% trans 'Latest user' %}</p>
+			<h4 class="list-group-item-heading">
+				&nbsp; {{ latest.fullname }}
+			</h4>
+			<span class="clearfix"></span>
+		</a>
+	</div>
+
+</div>
