@@ -1,6 +1,6 @@
 <div class="alert alert-dismissable alert-danger">
 	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-	{{ record.message }}
+	{{ record.formatted }}
 
 	{% if record.context.errors is not empty %}
 		<ul>
