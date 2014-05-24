@@ -1,13 +1,1 @@
-<div class="alert alert-dismissable alert-danger">
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-	{{ message }}
-	{% if errors %}
-		{% block error_flash %}
-			<ul>
-				{% for field, error in errors %}
-					<li>{{ field ~ ': ' ~ error }}</li>
-				{% endfor %}
-			</ul>
-		{% endblock %}
-	{% endif %}
-</div>
+{% extends 'frontend/alert/error.twig' %}

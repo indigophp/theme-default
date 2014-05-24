@@ -1,4 +1,12 @@
 <div class="alert alert-dismissable alert-danger">
 	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-	{{ message }}
+	{{ record.message }}
+
+	{% if record.context.errors is not empty %}
+		<ul>
+			{% for field, error in record.context.errors %}
+				<li>{{ field ~ ': ' ~ error }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
 </div>
