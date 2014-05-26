@@ -47,3 +47,9 @@
 {{ block('create') }}
 
 {% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ base_url() }}assets/theme/js/lib/jquery.dataTables.js"></script>
+<script src="{{ base_url() }}assets/theme/js/datatables.js"></script>
+{% endblock %}
