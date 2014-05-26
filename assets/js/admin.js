@@ -108,7 +108,9 @@ var IndigoAdmin = (function() {
 					// LENGTH - Inline-Form control
 					var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
 					// length_sel.addClass('form-control input-sm');
-					length_sel.selectpicker().selectpicker('setStyle', 'btn-sm', 'add');
+					length_sel.selectpicker({
+						"width": "auto"
+					}).selectpicker('setStyle', 'btn-sm', 'add');
 				},
 				"fnServerData": function(sSource, aoData, fnCallback, oSettings) {
 					$.each($(this).data(), function(index, val) {
