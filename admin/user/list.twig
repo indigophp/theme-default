@@ -13,12 +13,6 @@
 </p>
 
 <div class="panel panel-default">
-	<!-- <div class="panel-heading">
-		<div class="panel-title">
-			<span class="glyphicon glyphicon-user"></span>
-			Users
-		</div>
-	</div> -->
 	<table class="datatables table table-striped table-hover" data-source="{{ admin_url() }}auth/ajax/list.json">
 		<thead>
 			<tr class="filter">
@@ -70,4 +64,10 @@
 	{% endif %}
 </p>
 
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ base_url() }}assets/theme/js/lib/jquery.dataTables.js"></script>
+<script src="{{ base_url() }}assets/theme/js/datatables.js"></script>
 {% endblock %}
