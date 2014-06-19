@@ -9610,6 +9610,9 @@ div.dataTables_info {
 .theme-container .theme-inner {
   display: inline-block;
 }
+.theme-container .theme-inner h3 {
+  margin-top: 0;
+}
 @media print {
   .side-navigation {
     display: none;
