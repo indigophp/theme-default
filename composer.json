@@ -1,0 +1,16 @@
+{
+    "name": "indigophp/indigo-theme-default",
+    "type": "fuel-theme",
+    "description": "Default theme for IndigoPHP framework",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sági-Kazár Márk",
+            "email": "mark.sagikazar@gmail.com"
+        }
+    ],
+    "require": {
+        "composer/installers": "~1.0",
+        "indigophp/indigo-design": "dev-develop"
+    }
+}
