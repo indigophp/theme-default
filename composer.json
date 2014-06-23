@@ -2,10 +2,11 @@
     "name": "indigophp/indigo-theme-default",
     "type": "fuel-theme",
     "description": "Default theme for IndigoPHP framework",
+    "homepage": "https://indigophp.com",
     "license": "MIT",
     "authors": [
         {
-            "name": "Sági-Kazár Márk",
+            "name": "Márk Sági-Kazár",
             "email": "mark.sagikazar@gmail.com"
         }
     ],
