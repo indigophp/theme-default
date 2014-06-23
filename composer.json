@@ -11,7 +11,9 @@
         }
     ],
     "require": {
-        "composer/installers": "~1.0",
+        "composer/installers": "~1.0"
+    },
+    "require-dev": {
         "indigophp/indigo-design": "dev-develop"
     },
     "extra": {
