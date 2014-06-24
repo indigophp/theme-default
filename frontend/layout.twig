@@ -8,14 +8,13 @@
 	<title>{% if not title is empty %}{{ title }} &raquo; {% endif %}{{ site_name }}</title>
 
 	{% block head %}
-	<link rel="stylesheet" href="{{ base_url() }}assets/theme/css/bootstrap.min.css" title="Indigo theme">
-	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+	<link rel="stylesheet" href="{{ theme.asset_url('css/style.css') }}" title="Indigo theme">
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!--[if lt IE 9]>
-			<script src="{{ base_url() }}assets/theme/js/html5shiv.js"></script>
-			<script src="{{ base_url() }}assets/theme/js/respond.min.js"></script>
-			<![endif]-->
+	<!--[if lt IE 9]>
+		<script src="{{ theme.asset_url('js/lib/html5shiv.js') }}"></script>
+		<script src="{{ theme.asset_url('js/lib/respond.min.js') }}"></script>
+	<![endif]-->
 	{% endblock %}
 
 	</head>
@@ -51,11 +50,11 @@
 
 
 	{% block javascript %}
-	<script src="{{ base_url() }}assets/theme/js/jquery-1.9.1.min.js"></script>
-	<script src="{{ base_url() }}assets/theme/js/bootstrap.min.js"></script>
-	{# <script src="{{ base_url() }}assets/theme/js/bootstrap-switch.min.js"></script>
-	<script src="{{ base_url() }}assets/theme/js/bootstrap-select.min.js"></script> #}
+	<script src="{{ theme.asset_url('js/lib/jquery.min.js') }}"></script>
+	<script src="{{ theme.asset_url('js/lib/jquery-migrate.min.js') }}"></script>
+	<script src="{{ theme.asset_url('js/lib/bootstrap.min.js') }}"></script>
 	{% endblock %}
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			{% block documentready %}{% endblock %}

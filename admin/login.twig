@@ -7,12 +7,12 @@
 
 	<title>{% trans %}Sign In &raquo; {{ site_name }}{% endtrans %}</title>
 
-	<link rel="stylesheet" href="{{ base_url() }}/assets/theme/css/style.min.css" title="{% trans 'Indigo theme' %}">
+	<link rel="stylesheet" href="{{ theme.asset_url('css/style.css') }}" title="Indigo theme">
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
-		<script src="{{ base_url() }}/assets/theme/js/lib/html5shiv.js"></script>
-		<script src="{{ base_url() }}/assets/theme/js/lib/respond.min.js"></script>
+		<script src="{{ theme.asset_url('js/lib/html5shiv.js') }}"></script>
+		<script src="{{ theme.asset_url('js/lib/respond.min.js') }}"></script>
 	<![endif]-->
 	</head>
 	<body>
@@ -40,8 +40,8 @@
 		</div> <!-- /container -->
 
 
-	<script src="{{ base_url() }}assets/theme/js/lib/jquery.min.js"></script>
-	<script src="{{ base_url() }}assets/theme/js/lib/bootstrap.min.js"></script>
+	<script src="{{ theme.asset_url('js/lib/jquery.min.js') }}"></script>
+	<script src="{{ theme.asset_url('js/lib/bootstrap.min.js') }}"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			// IndigoAdmin.pageInit();

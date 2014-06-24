@@ -73,6 +73,6 @@
 
 {% block javascript %}
 	{{ parent() }}
-	<script src="{{ base_url() }}assets/theme/js/bootstrap-switch.min.js"></script>
+	<script src="{{ theme.asset_url('js/bootstrap-switch.min.js') }}"></script>
 }
 {% endblock %}
