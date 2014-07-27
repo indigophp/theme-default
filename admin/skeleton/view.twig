@@ -14,8 +14,8 @@
 			{% for key, item in model.view() %}
 				<tr>
 					<td>{{ item.label }}</td>
-					{% if item.form.options is not empty %}
-						<td>{{ attribute(item.form.options, _attribute.get(model, key)|trim)|trim|nl2br|default('<i>None</i>') }}</td>
+					{% if item.options is not empty %}
+						<td>{{ attribute(item.options, _attribute.get(model, key)|trim)|trim|nl2br|default('<i>None</i>') }}</td>
 					{% else %}
 						<td>{{ _attribute.get(model, key)|trim|nl2br|default('<i>None</i>') }}</td>
 					{% endif %}
