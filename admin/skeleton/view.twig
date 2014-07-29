@@ -11,7 +11,7 @@
 	</div>
 	<table class="table table-striped">
 		<tbody>
-			{% for key, item in model.view() %}
+			{% for key, item in model.view_properties() %}
 				<tr>
 					<td>{{ item.label }}</td>
 					{% if item.options is not empty %}
@@ -36,5 +36,5 @@
 {% endblock %}
 
 {% block documentready %}
-	IndigoAdmin.addFastButton('{% trans 'Back' %}', 'glyphicon glyphicon-arrow-left', '{{ url }}/');
+	IndigoAdmin.addFastButton('{% trans 'Back' %}', 'glyphicon glyphicon-arrow-left', '{{ url }}');
 {% endblock %}
