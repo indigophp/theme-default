@@ -1,6 +1,7 @@
 {% set attributes = element.getAttributes() %}
 {% set content = element.getContents() %}
 {% set default = element.getMeta('default', 0) %}
+{% set hidden = attributes|merge({type: 'hidden'}) %}
 
-
+<input {{ hidden|attr }} value="0">
 <input {{ attributes|attr(['type', 'value'], true) }} data-toggle="switch" data-on-label="{{ content[1].getLabel() }}" data-off-label="{{ content[0].getLabel() }}" data-size="large" type="checkbox"{% if (element.getValue()|default(default)) == 1 %} checked{% endif %} value="1">
