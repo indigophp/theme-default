@@ -17,7 +17,7 @@
 			{% block _filter %}
 				<tr class="filter">
 					{% for element in filters %}
-						<td data-filter="{{ getFormElementType(element) }}" class="{% if item.list.sort is sameas(false) %}no-sort{% endif %}">
+						<td data-filter="{{ getFormElementType(element) }}" class="{% if element.getMeta('sort', true) is sameas(false) %}no-sort{% endif %}">
 							{% include 'admin/skeleton/filter/' ~ getFormElementTemplate(element) ~ '.twig' with {'element': element} only %}
 						</td>
 					{% endfor %}
@@ -28,11 +28,7 @@
 			{% endblock %}
 			<tr>
 				{% for element in filters %}
-					{% if element.getName() == 'id' %}
-						<th style="width: 100px;">#</th>
-					{% else %}
-						<th>{{ element.getLabel() }}</th>
-					{% endif %}
+					<th>{{ element.getLabel() }}</th>
 				{% endfor %}
 				<th class="hidden-print" style="width: 140px;"></th>
 			</tr>

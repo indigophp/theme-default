@@ -5,10 +5,23 @@
 	{% if element|length > 6 %}
 		{% set attributes = attributes|merge({"data-live-search": "true"}) %}
 	{% endif %}
+	{% if attributes.multiple == 'multiple' %}
+		{% set attributes = attributes|merge({"name": attributes.name ~ "[]"}) %}
+	{% endif %}
 
-	<select {{ element.getAttributes()|attr }}>
-		{% for item in element %}
-			<option {{ item.getAttributes()|attr }}>{{ item.getLabel() }}</option>
-		{% endfor %}
+	<select {{ attributes|attr }}>
+		{{ _self.iterate(element) }}
 	</select>
 {% endif %}
+
+{% macro iterate(element) %}
+	{% for item in element %}
+		{% if getFormElementType(item) == 'optgroup' %}
+			<optgroup label="{{ item.getLabel() }}">
+				{{ _self.iterate(item) }}
+			</optgroup>
+		{% else %}
+			<option {{ item.getAttributes()|attr }}>{{ item.getContents() }}</option>
+		{% endif %}
+	{% endfor %}
+{% endmacro %}

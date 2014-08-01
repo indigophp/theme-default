@@ -8,6 +8,12 @@
 
 {% endblock %}
 
+{% block javascript %}
+{{ parent() }}
+<script src="{{ theme.asset_url('js/lib/ckeditor/ckeditor.js') }}"></script>
+<script src="{{ theme.asset_url('js/lib/ckeditor/adapters/jquery.js') }}"></script>
+{% endblock %}
+
 {% block documentready %}
 	$('select').selectpicker();
 	IndigoAdmin.addProxyButton('{% trans 'Save' %}', 'glyphicon glyphicon-save', '#form-button-save');
