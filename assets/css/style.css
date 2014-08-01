@@ -4304,6 +4304,10 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
     margin-right: 0;
   }
 }
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+  transform: none !important;
+}
 .breadcrumb {
   padding: 8px 15px;
   margin-bottom: 20px;
