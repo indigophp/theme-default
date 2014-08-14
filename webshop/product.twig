@@ -1,0 +1,53 @@
+{% extends 'frontend/layout.twig' %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <img class="img-thumbnail" src="http://placehold.it/550x650">
+            </div>
+            <div class="col-md-9">
+                <h1>{{ product.name }} <small>#{{ product.id }}</small></h1>
+                <span class="lead">$10</span>
+                <hr>
+                <strong>Brand:</strong> {{ product.manufacturer.name }}<br>
+                <strong>Stock:</strong> 1-5 darab<br>
+                <strong>Warranty:</strong> 1 év<br>
+                <hr>
+
+                <button class="btn btn-success btn-bordered">Add to cart</button>
+                <button class="btn btn-default btn-bordered">Add to wishlist</button>
+                <br> <br>
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs nav-tabs-bordered">
+                        <li class="active"><a href="#description" data-toggle="tab">Description</a></li>
+                        <li><a href="#spec" data-toggle="tab">Specification</a></li>
+                        <li><a href="#reviews" data-toggle="tab">Reviews</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="description">{{ product.description }}</div>
+                        <div class="tab-pane tab-pane-table" id="spec">
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <td>Spec 1</td>
+                                    <td>Val 1</td>
+                                </tr>
+                                <tr>
+                                    <td>Spec 2</td>
+                                    <td>Val 2</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="tab-pane" id="reviews">Soon</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
