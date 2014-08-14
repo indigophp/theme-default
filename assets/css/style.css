@@ -9745,6 +9745,9 @@ div.DTFC_LeftFootWrapper table {
 body {
   padding-top: 35px;
 }
+.wrapper {
+  margin-top: 20px;
+}
 .http404 {
   text-align: center;
   font-size: 320px;
