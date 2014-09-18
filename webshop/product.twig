@@ -8,15 +8,16 @@
                 <img class="img-thumbnail" src="http://placehold.it/550x650">
             </div>
             <div class="col-md-9">
-                <h1>{{ product.name }} <small>#{{ product.id }}</small></h1>
-                <span class="lead">$10</span>
-                <hr>
-                <strong>Brand:</strong> {{ product.manufacturer.name }}<br>
-                <strong>Stock:</strong> 1-5 darab<br>
-                <strong>Warranty:</strong> 1 év<br>
+                <h1>{{ product.getName() }} <small>#{{ product.getId() }}</small></h1>
+                <span class="lead">{{ product.getPrice().getAmount() }}</span>
                 <hr>
 
-                <button class="btn btn-success btn-bordered">Add to cart</button>
+                <form action="{{ url('webshop/cart/add') }}" method="post">
+                    <input type="hidden" name="id" value="{{ product.getId() }}">
+                    <input type="hidden" name="quantity" value="1">
+                    <button class="btn btn-success btn-bordered">Add to cart</button>
+                </form>
+
                 <button class="btn btn-default btn-bordered">Add to wishlist</button>
                 <br> <br>
                 <div>
@@ -29,7 +30,7 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div class="tab-pane active" id="description">{{ product.description }}</div>
+                        <div class="tab-pane active" id="description">{{ product.getDescription() }}</div>
                         <div class="tab-pane tab-pane-table" id="spec">
                             <table class="table table-bordered table-striped">
                                 <tr>
