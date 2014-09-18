@@ -4,39 +4,58 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<div class="panel panel-primary">
-				<div class="panel-heading">Cart</div>
-				{% if cart.count() > 0 %}
-					<table class="table">
-						<tr>
-							<th>#</th>
-							<th>Name</th>
-							<th>Price</th>
-							<th>Quantity</th>
-							<th>Subtotal</th>
-							<th>Delete</th>
-						</tr>
+			<form class="panel panel-primary" action="{{ url('webshop/cart/update') }}" method="post">
+				<div class="panel-heading">{% trans 'Cart' %}</div>
+				{% if cart.getQuantity() > 0 %}
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>{% trans 'Name' %}</th>
+									<th>{% trans 'Price' %}</th>
+									<th>{% trans 'Quantity' %}</th>
+									<th>{% trans 'Subtotal' %}</th>
+									<th>{% trans 'Delete' %}</th>
+								</tr>
+							</thead>
 
-						{% for item in cart %}
-							<tr>
-								<td>{{ item.id }}</td>
-								<td>{{ item.name }}</td>
-								<td>{{ item.getPrice(true) }}</td>
-								<td>{{ item.quantity }}</td>
-								<td>{{ item.getSubtotal(true) }}</td>
-								<td><a href="webshop/cart/remove/{{ item.getId() }}">Delete</a></td>
-							</tr>
-						{% endfor %}
-					</table>
+							{% for item in cart.getItems() %}
+								<tr>
+									<td><input type="hidden" name="id[]" value="{{ item.getId() }}">{{ item.getId() }}</td>
+
+									<td><a href="{{ url('webshop/product/' ~ item.getId()) }}">{{ item.getName() }}</a></td>
+
+									<td>{{ item.getPrice().getAmount() }}</td>
+
+									<td><input type="text" name="quantity[]" value="{{ item.getQuantity() }}"></td>
+
+									<td>{{ item.getSubtotal().getAmount() }}</td>
+
+									<td><a class="btn btn-danger" href="{{ url('webshop/cart/remove/' ~ item.getId()) }}">{% trans 'Delete' %}</a></td>
+								</tr>
+							{% endfor %}
+
+							<tfoot>
+								<tr>
+									<td colspan="4" class="text-right">{% trans 'Total' %}:</td>
+									<td colspan="2"><strong>{{ cart.getTotal().getAmount() }}</strong></td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
 					<div class="panel-footer clearfix">
+						<a href="{{ url('webshop/cart/reset') }}" class="btn btn-danger">{% trans 'Reset' %}</a>
+						<button class="btn btn-success">{% trans 'Update' %}</button>
+
 						<div class="pull-right">
-							<a href="webshop/cart/reset" class="btn btn-danger">Reset</a>
+							<a href="{{ url('webshop/checkout') }}" class="btn btn-success">{% trans 'Checkout' %}</a>
 						</div>
 					</div>
 				{% else %}
-					<div class="panel-body"><i>The cart is empty</i></div>
+					<div class="panel-body"><i>{% trans 'The cart is empty' %}</i></div>
 				{% endif %}
-			</div>
+			</form>
 		</div>
 	</div>
 </div>
