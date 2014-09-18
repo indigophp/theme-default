@@ -45,7 +45,7 @@
 						</table>
 					</div>
 					<div class="panel-footer clearfix">
-						<a href="{{ url('webshop/cart/reset') }}" class="btn btn-danger">{% trans 'Reset' %}</a>
+						<a id="reset" href="{{ url('webshop/cart/reset') }}" class="btn btn-danger">{% trans 'Reset' %}</a>
 						<button class="btn btn-success">{% trans 'Update' %}</button>
 
 						<div class="pull-right">
@@ -59,4 +59,24 @@
 		</div>
 	</div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+
+<script src="{{ theme.asset_url('js/lib/bootbox.js') }}"></script>
+{% endblock %}
+
+{% block documentready %}
+$(document).on('click', '#reset', function(e) {
+	var link = $(this).attr('href');
+
+	e.preventDefault();
+
+	bootbox.confirm("{% trans 'Are you sure you want to reset your cart?' %}", function(result) {
+		if (result) {
+			document.location.href = link;
+		}
+	});
+});
 {% endblock %}
