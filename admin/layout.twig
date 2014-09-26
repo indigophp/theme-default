@@ -72,7 +72,7 @@
 							</li>
 						</ul>
 					</div><!-- /.visible-xs -->
-					{% include 'admin/menu.twig' with { 'items': admin_menu('indigo'), 'class': 'primary' } %}
+					{{ knp_menu_render('admin', {'template': 'admin/menu.twig'}, 'admin') }}
 				</div> <!-- /.side-navigation-wrapper -->
 				<div class="side-navigation-footer">
 					Aucsa
