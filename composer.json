@@ -22,6 +22,11 @@
 	"require-dev": {
 		"indigophp/indigo-design": "dev-develop"
 	},
+	"provide": {
+		"indigophp/admin-theme": "dev-develop",
+		"indigophp/base-theme": "dev-develop",
+		"indigophp/meta-theme": "dev-develop"
+	},
 	"extra": {
 		"installer-name": "default"
 	},
