@@ -10,12 +10,13 @@
  */
 
 return [
-	'name'     => 'Indigo Default',
-	'version'  => '0.1',
-	'author'   => 'Tamás Barta',
-	'parser'   => 'twig',
-	'supports' => [
+	'name'    => 'Indigo Default',
+	'version' => '0.1',
+	'author'  => 'Tamás Barta',
+	'parser'  => 'twig',
+	'provide' => [
 		'admin',
-		'frontend',
+		'base',
+		'meta',
 	],
 ];
