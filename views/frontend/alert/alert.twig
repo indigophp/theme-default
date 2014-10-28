@@ -1,3 +1,0 @@
-{% for template, record in session_get_flash('alert', []) %}
-	{% include 'frontend/alert/' ~ template ~ '.twig' with record %}
-{% endfor %}
