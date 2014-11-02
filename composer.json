@@ -27,6 +27,11 @@
 		"indigophp/base-theme": "dev-develop",
 		"indigophp/meta-theme": "dev-develop"
 	},
+	"autoload": {
+		"psr-4": {
+			"Indigo\\Theme\\Default\\": ""
+		}
+	},
 	"extra": {
 		"installer-name": "default"
 	},
