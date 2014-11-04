@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Indigo\Theme\Default\Providers;
+namespace Indigo\Theme\Indigo\Providers;
 
 use Fuel\Dependency\ServiceProvider;
 
