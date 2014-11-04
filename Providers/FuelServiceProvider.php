@@ -46,5 +46,12 @@ class FuelServiceProvider extends ServiceProvider
 
 			return $instance;
 		});
+
+		$this->extend('menu.renderer.fuel', function($dic, $instance)
+		{
+			$instance->setDefaultTemplate('knp_menu.html.twig');
+
+			return $instance;
+		});
 	}
 }
