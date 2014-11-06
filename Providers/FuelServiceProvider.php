@@ -23,7 +23,7 @@ class FuelServiceProvider extends ServiceProvider
 	/**
 	 * {@inheritdoc}
 	 */
-	public $provides = true;
+	public $provides = [];
 
 	/**
 	 * {@inheritdoc}
