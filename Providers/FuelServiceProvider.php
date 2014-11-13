@@ -31,32 +31,14 @@ class FuelServiceProvider extends ServiceProvider
 	public function provide()
 	{
 		// menu extension
-		$this->extend('parser.twig', function($dic, $instance)
+		$this->register('twig.menu', function($dic)
 		{
-			$stack = $container->resolve('requeststack');
-			if ($request = $stack->top())
-			{
-				$app = $request->getComponent()->getApplication();
-			}
-			else
-			{
-				$app = $container->resolve('application::__main');
-			}
-
-			$instance->setManager($app->getViewManager());
-
 			$rendererProvider = $dic->resolve('menu.renderer_provider');
 			$menuProvider = $dic->resolve('menu.provider');
 
 			$helper = $dic->resolve('Knp\\Menu\\Twig\\Helper', [$rendererProvider, $menuProvider]);
 
-			$extension = $dic->resolve('Knp\\Menu\\Twig\\MenuExtension', [$helper]);
-
-			$twig = $instance->getTwig();
-
-			$twig->addExtension($extension);
-
-			return $instance;
+			return $dic->resolve('Knp\\Menu\\Twig\\MenuExtension', [$helper]);
 		});
 
 		$this->extend('menu.renderer.fuel', function($dic, $instance)
