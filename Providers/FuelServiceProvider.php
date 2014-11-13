@@ -33,6 +33,18 @@ class FuelServiceProvider extends ServiceProvider
 		// menu extension
 		$this->extend('parser.twig', function($dic, $instance)
 		{
+			$stack = $container->resolve('requeststack');
+			if ($request = $stack->top())
+			{
+				$app = $request->getComponent()->getApplication();
+			}
+			else
+			{
+				$app = $container->resolve('application::__main');
+			}
+
+			$instance->setManager($app->getViewManager());
+
 			$rendererProvider = $dic->resolve('menu.renderer_provider');
 			$menuProvider = $dic->resolve('menu.provider');
 
