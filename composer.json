@@ -16,16 +16,16 @@
 	],
 	"require": {
 		"composer/installers": "dev-master",
-		"twig/twig": "dev-master",
-		"twig/extensions": "dev-master"
+		"twig/twig": "~1.18",
+		"twig/extensions": "~1.2"
 	},
 	"require-dev": {
-		"indigophp/indigo-design": "dev-develop"
+		"indigophp/indigo-design": "dev-master"
 	},
 	"provide": {
-		"indigophp/admin-theme": "dev-develop",
-		"indigophp/base-theme": "dev-develop",
-		"indigophp/meta-theme": "dev-develop"
+		"indigophp/admin-theme": "dev-master",
+		"indigophp/base-theme": "dev-master",
+		"indigophp/meta-theme": "dev-master"
 	},
 	"autoload": {
 		"psr-4": {
