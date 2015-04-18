@@ -20,7 +20,7 @@
 		"twig/extensions": "~1.2"
 	},
 	"require-dev": {
-		"indigophp/indigo-design": "dev-master"
+		"indigophp/design": "dev-master"
 	},
 	"provide": {
 		"indigophp/admin-theme": "dev-master",
